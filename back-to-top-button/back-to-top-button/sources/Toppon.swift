@@ -10,35 +10,69 @@ import Foundation
 import UIKit
 
 public class Toppon: UIButton {
+    /// The TopponDelegate variable, which should be set if you'd like to be notified.
+    ///  public weak var delegate: TopponDelegate?
     
-    public var delegate:TopponDelegate?
+    public lazy var destPosition: CGPoint? = CGPoint(x:0, y:0)
     
-    public init(frame: CGRect,
-                normalIcon: String?,
-                direction: Direction = .always,
-                LabelType: LabelType = .none) {
-        super.init(frame: frame)
+    public lazy var presentMode: PresentMode = .always
+    
+    public lazy var labelType: LabelType = .none
+    
+    public init(initPosition: CGPoint?, 
+                size: Int,
+                normalIcon: String?) {
+        let ViewSize = CGSize(width: size, height: size)
+        super.init(frame: CGRect(origin: initPosition!, size: ViewSize))
+        
+        if presentMode == .always {
+            self.frame.origin = destPosition!
+        }
+        
+        if let icon = normalIcon {
+            setImage(UIImage(named: icon), for: .normal)
+        }
+        
+        TopponInitial()
     }
-    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         fatalError("init(coder:) has not been implemented")
     }
+    func TopponInitial() {
+        self.alpha = 0.0
+        //self.addTarget(self, action: #selector(TopponPressed), for: .touchUpInside)
+        self.addTarget(self, action: #selector(animationPressed(sender:)), for: .touchUpInside)
+    }
+    
+    public func setDestPosition(destPosition: CGPoint) {
+        self.destPosition! = destPosition
+        self.frame.origin = self.destPosition!
+    }
+    
+    public func present(_ toppon: Toppon, duration: Double, delay: Double) {
+        UIView.animate(withDuration: duration,
+                       delay: delay,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 10.0,
+                       animations: {
+                        toppon.alpha = 1
+                        if toppon.presentMode != .always {
+                            toppon.frame.origin = toppon.destPosition!
+                        }
+            })
+    }
 }
 
+
+
+
+
+
 public extension Toppon {
-    enum Direction {
-        /// Toppon button will move in from the top of screen.
-        case top
-        
-        /// Toppon button will move in from the bottom of screen.
-        case bottom
-        
-        /// Toppon button will move in from the left of screen.
-        case left
-        
-        /// Toppon button will move in from the right of screen.
-        case right
+    enum PresentMode {
+        /// Toppon button will move in with animation.
+        case normal
         
         /// (DEFAULT) Toppon button will always show.
         case always
@@ -49,5 +83,23 @@ public extension Toppon {
         case center
         case bottom
         case none
+    }
+}
+
+public extension Toppon {
+    @objc func animationPressed(sender: Toppon) {
+        UIView.animate(withDuration: 0.1,
+                       delay: 0,
+                       options: .autoreverse,
+                       animations: {
+                        sender.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
+                    }, completion: {(t) in
+                        sender.transform = CGAffineTransform(scaleX: 1, y: 1)
+                        self.animationMoveOut(sender: sender)
+        })
+    }
+    
+    @objc func animationMoveOut(sender: Toppon) {
+        print("Go")
     }
 }

@@ -9,17 +9,16 @@
 import UIKit
 
 class ViewController: UIViewController {
-
+    let toppon = Toppon(initPosition: CGPoint(x:148, y:48),
+                        size: 48,
+                        normalIcon: "top48")
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        toppon.setDestPosition(destPosition: CGPoint(x:150, y:300))
+        view.addSubview(toppon)
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewDidAppear(_ animated: Bool) {
+        toppon.present(toppon, duration: 1.5, delay: 0)
     }
-
-
 }
 
