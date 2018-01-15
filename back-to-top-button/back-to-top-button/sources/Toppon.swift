@@ -11,50 +11,71 @@ import UIKit
 
 public class Toppon: UIButton {
     /// The TopponDelegate variable, which should be set if you'd like to be notified.
-    ///  public weak var delegate: TopponDelegate?
+    public weak var delegate: TopponDelegate?
     
+    /// destination position of Topon button.
+    /// Will not be use if presentMode isn't Toppon.PresentMode.normal
     public lazy var destPosition: CGPoint? = CGPoint(x:0, y:0)
     
-    public lazy var presentMode: PresentMode = .always
+    /// Determines the type of Toppon button present mode.
+    /// Default to Toppon.PresentMode.pop
+    /// see the presentMode enum for more detail.
+    public lazy var presentMode: PresentMode? = .pop
     
-    public lazy var labelType: LabelType = .none
+    /// Determines the type of Toppon button label position.
+    /// Default to LabelType.none
+    /// See the LabelType enum for more detail.
+    public lazy var labelType: LabelType? = .none
     
+    public lazy var labelText: String? = "Top"
+    
+    public lazy var labelTextFont : UIFont? = UIFont.systemFont(ofSize: 17.0)
+    
+    ///.public lazy var 
+    
+    /// Initial and return a Toppon object
+    /// parameter initPosition: The initial position of Toppon button.
+    /// parameter size:         The width and height for the frame size of Toppon.
+    /// parameter normalIcon:   The image to use for the specified normal state.
     public init(initPosition: CGPoint?, 
                 size: Int,
                 normalIcon: String?) {
         let ViewSize = CGSize(width: size, height: size)
         super.init(frame: CGRect(origin: initPosition!, size: ViewSize))
         
-        if presentMode == .always {
-            self.frame.origin = destPosition!
-        }
-        
         if let icon = normalIcon {
             setImage(UIImage(named: icon), for: .normal)
         }
-        
         TopponInitial()
     }
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         fatalError("init(coder:) has not been implemented")
     }
-    func TopponInitial() {
+    
+    fileprivate func TopponInitial() {
         self.alpha = 0.0
-        //self.addTarget(self, action: #selector(TopponPressed), for: .touchUpInside)
         self.addTarget(self, action: #selector(animationPressed(sender:)), for: .touchUpInside)
     }
     
+    /// Set Toppon button destination position.
+    /// Will not be used if presentMode set as Toppon.PresentMode.always
     public func setDestPosition(destPosition: CGPoint) {
         self.destPosition! = destPosition
         self.frame.origin = self.destPosition!
     }
+    public func setPresentMode(presentMode: PresentMode) {
+        self.presentMode! = presentMode
+    }
+    public func setLabelType(labelType: LabelType) {
+        self.labelType! = labelType
+    }
     
+    /// Animation for presenting Toppon button.
     public func present(_ toppon: Toppon, duration: Double, delay: Double) {
         UIView.animate(withDuration: duration,
                        delay: delay,
-                       usingSpringWithDamping: 0.5,
-                       initialSpringVelocity: 10.0,
                        animations: {
                         toppon.alpha = 1
                         if toppon.presentMode != .always {
@@ -74,7 +95,11 @@ public extension Toppon {
         /// Toppon button will move in with animation.
         case normal
         
+        ///Toppon button will popup when app did launch.
+        case pop
+        
         /// (DEFAULT) Toppon button will always show.
+        /// if
         case always
     }
     
