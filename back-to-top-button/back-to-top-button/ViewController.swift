@@ -8,13 +8,14 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, TopponDelegate {
     let toppon = Toppon(initPosition: CGPoint(x:148, y:200),
                         size: 48,
                         normalIcon: "top48")
     override func viewDidLoad() {
         super.viewDidLoad()
         self.toppon.presentMode = .always
+        self.toppon.delegate = self
         view.addSubview(toppon)
     }
     override func viewDidAppear(_ animated: Bool) {

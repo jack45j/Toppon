@@ -9,11 +9,13 @@
 import Foundation
 
 public protocol TopponDelegate: NSObjectProtocol {
-//    func Toppon(WillShow toppon:Toppon)
-//    func TopponDidShow()
-//    func TopponWillDismiss()
-//    func TopponDidDismiss()
-//    func TopponDidPress()
+    func TopponDidPressed()
+}
+
+extension TopponDelegate {
+    func TopponDidPressed() {
+        printMessage()
+    }
 }
 
 public extension TopponDelegate {

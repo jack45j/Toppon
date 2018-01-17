@@ -31,8 +31,6 @@ public class Toppon: UIButton {
     
     public lazy var labelTextFont : UIFont? = UIFont.systemFont(ofSize: 17.0)
     
-    ///.public lazy var 
-    
     /// Initial and return a Toppon object
     /// parameter initPosition: The initial position of Toppon button.
     /// parameter size:         The width and height for the frame size of Toppon.
@@ -48,12 +46,10 @@ public class Toppon: UIButton {
         }
         TopponInitial()
     }
-    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         fatalError("init(coder:) has not been implemented")
     }
-    
     fileprivate func TopponInitial() {
         self.alpha = 0.0
         self.addTarget(self, action: #selector(animationPressed(sender:)), for: .touchUpInside)
@@ -99,7 +95,7 @@ public extension Toppon {
         case pop
         
         /// (DEFAULT) Toppon button will always show.
-        /// if
+        ///
         case always
     }
     
@@ -113,6 +109,7 @@ public extension Toppon {
 
 public extension Toppon {
     @objc func animationPressed(sender: Toppon) {
+        delegate?.TopponDidPressed()
         UIView.animate(withDuration: 0.1,
                        delay: 0,
                        options: .autoreverse,
