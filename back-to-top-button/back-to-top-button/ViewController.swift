@@ -9,6 +9,7 @@
 import UIKit
 
 class ViewController: UIViewController, TopponDelegate {
+    
     let toppon = Toppon(initPosition: CGPoint(x:300, y:100),
                         size: 48,
                         normalIcon: "top48")

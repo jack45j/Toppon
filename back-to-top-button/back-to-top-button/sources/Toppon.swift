@@ -35,7 +35,9 @@ public class Toppon: UIButton {
     private lazy var labelText: String? = "Top"
     
     /// Custom label text font style and size.
-    private lazy var labelTextFont : UIFont? = UIFont.systemFont(ofSize: 17.0)
+    private lazy var labelTextFont: UIFont? = UIFont.systemFont(ofSize: 17.0)
+    
+    public lazy var dismissAfterPressed: Bool? = false
     
     /// Initial and return a Toppon object
     /// parameter initPosition: The initial position of Toppon button.
@@ -77,15 +79,15 @@ extension Toppon {
     }
     
     public func setLabelType(_ labelType: LabelType?) {
-        
+        self.labelType = labelType
     }
     
     public func setLabelText(_ labelText: String?) {
-        
+        self.labelText = labelText!
     }
     
     public func setLabelTextFont(_ labelTextFont: UIFont?) {
-        
+        self.labelTextFont = labelTextFont
     }
 }
 
@@ -93,32 +95,37 @@ extension Toppon {
 
 extension Toppon {
     public func present(_ toppon: Toppon) {
+        delegate?.TopponWillPresent()
         switch self.presentMode {
         case .normal? :
-            TopponLog("Present mode set to normal.")
             animationNormalMoveIn(sender: toppon)
         case .pop? :
-            TopponLog("Present mode set to pop.")
             animationPopUp(sender: toppon)
         case .always? :
-            TopponLog("Present mode set to always.")
+            break
         default :
             fatalError("Present mode unknown.")
         }
+        TopponLog("Toppon present mode \(self.presentMode!) presented.")
     }
+    
     public func dismiss(_ toppon: Toppon) {
+        delegate?.TopponWillDismiss()
         switch self.presentMode {
         case .normal? :
-            TopponLog("Present mode set to normal.")
             animationNormalMoveOut(sender: toppon)
         case .pop? :
-            TopponLog("Present mode set to pop.")
             animationPopDown(sender: toppon)
         case .always? :
-            TopponLog("Present mode set to always.")
+            break
         default :
             fatalError("Present mode unknown.")
         }
+        TopponLog("Toppon present mode \(self.presentMode!) diemissed.")
+    }
+    
+    public func scroll(To: ScrollType, sender: UIScrollView) {
+        
     }
 }
 
@@ -141,6 +148,11 @@ public extension Toppon {
         case center
         case bottom
         case none
+    }
+    
+    enum ScrollType {
+        case top
+        case bottom
     }
 }
 

@@ -10,10 +10,18 @@ import Foundation
 
 public protocol TopponDelegate: NSObjectProtocol {
     func TopponDidPressed()
+    func TopponWillPresent()
+    func TopponWillDismiss()
 }
 
 extension TopponDelegate {
     func TopponDidPressed() {
+        printMessage()
+    }
+    func TopponWillPresent() {
+        printMessage()
+    }
+    func TopponWillDismiss() {
         printMessage()
     }
 }
