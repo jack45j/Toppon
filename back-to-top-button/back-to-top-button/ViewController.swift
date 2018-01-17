@@ -14,8 +14,7 @@ class ViewController: UIViewController, TopponDelegate {
                         normalIcon: "top48")
     override func viewDidLoad() {
         super.viewDidLoad()
-        //toppon.setDestPosition(CGPoint(x:180, y:330))
-        toppon.setPresentMode(.normal)
+        toppon.setPresentMode(.pop)
         toppon.delegate = self
         view.addSubview(toppon)
     }

@@ -11,6 +11,7 @@ import UIKit
 
 public class Toppon: UIButton {
     /// The TopponDelegate variable, which should be set if you'd like to be notified.
+    /// See TopponDelegate.swift for more detail.
     public weak var delegate: TopponDelegate?
     
     /// Destination position of Topon button.
@@ -20,21 +21,21 @@ public class Toppon: UIButton {
     
     /// Determines the type of Toppon button present mode.
     /// Default to Toppon.PresentMode.always
-    /// see the presentMode enum for more detail.
+    /// See the presentMode enum for more detail.
     private lazy var presentMode: PresentMode? = .always
     
     /// Determines the type of Toppon button label position.
     /// Default to LabelType.none
     /// See the LabelType enum for more detail.
-    public lazy var labelType: LabelType? = .none
+    private lazy var labelType: LabelType? = .none
     
     /// Label text for Toppon button.
     /// Default to LabelType.none
     /// Set LabelType to others for displaying label text.
-    public lazy var labelText: String? = "Top"
+    private lazy var labelText: String? = "Top"
     
     /// Custom label text font style and size.
-    public lazy var labelTextFont : UIFont? = UIFont.systemFont(ofSize: 17.0)
+    private lazy var labelTextFont : UIFont? = UIFont.systemFont(ofSize: 17.0)
     
     /// Initial and return a Toppon object
     /// parameter initPosition: The initial position of Toppon button.
@@ -59,23 +60,38 @@ public class Toppon: UIButton {
     fileprivate func TopponInitial() {
         self.addTarget(self, action: #selector(animationPressedScale(sender:)), for: .touchUpInside)
     }
-    
-    /// Setting destination position.
-    /// Default to CGPoint(x:0, y:0)
-    public func setDestPosition(_ destPosition: CGPoint) {
+}
+
+/// MARK - Helpers (Config)
+
+extension Toppon {
+    public func setDestPosition(_ destPosition: CGPoint?) {
         self.destPosition = destPosition
     }
     
-    /// Setting Toppon present mode.
-    /// Default to Toppon.PresentMode.always
-    public func setPresentMode(_ presentMode: PresentMode) {
+    public func setPresentMode(_ presentMode: PresentMode?) {
         self.presentMode = presentMode
         if presentMode != .always {
             alpha = 0.0
         }
     }
     
-    /// Animation for presenting Toppon button.
+    public func setLabelType(_ labelType: LabelType?) {
+        
+    }
+    
+    public func setLabelText(_ labelText: String?) {
+        
+    }
+    
+    public func setLabelTextFont(_ labelTextFont: UIFont?) {
+        
+    }
+}
+
+/// MARK - Helpers (Behavior)
+
+extension Toppon {
     public func present(_ toppon: Toppon) {
         switch self.presentMode {
         case .normal? :
@@ -106,6 +122,8 @@ public class Toppon: UIButton {
     }
 }
 
+/// Mark - Enumerated Types (Public)
+
 public extension Toppon {
     enum PresentMode {
         /// Toppon button will move in from initPosition to destPosition with animation.
@@ -126,7 +144,7 @@ public extension Toppon {
     }
 }
 
-/// Mark - Animation
+/// MARK - Animation
 
 public extension Toppon {
     func animationNormalMoveIn(sender: Toppon) {
