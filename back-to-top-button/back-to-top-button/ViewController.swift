@@ -9,18 +9,19 @@
 import UIKit
 
 class ViewController: UIViewController, TopponDelegate {
-    let toppon = Toppon(initPosition: CGPoint(x:80, y:200),
+    let toppon = Toppon(initPosition: CGPoint(x:300, y:100),
                         size: 48,
                         normalIcon: "top48")
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        toppon.setPresentMode(.pop)
+        //toppon.setDestPosition(CGPoint(x:180, y:330))
+        toppon.setPresentMode(.normal)
         toppon.delegate = self
         view.addSubview(toppon)
     }
     override func viewDidAppear(_ animated: Bool) {
         toppon.present(toppon)
+        //toppon.dismiss(toppon)
     }
 }
 

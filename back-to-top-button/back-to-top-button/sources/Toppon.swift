@@ -15,10 +15,11 @@ public class Toppon: UIButton {
     
     /// Destination position of Topon button.
     /// Will not be use if presentMode isn't Toppon.PresentMode.normal
-    public lazy var destPosition: CGPoint? = CGPoint(x:0, y:0)
+    private lazy var destPosition: CGPoint? = CGPoint(x:0, y:0)
+    private lazy var initPosition: CGPoint? = CGPoint(x:0, y:0)
     
     /// Determines the type of Toppon button present mode.
-    /// Default to Toppon.PresentMode.pop
+    /// Default to Toppon.PresentMode.always
     /// see the presentMode enum for more detail.
     private lazy var presentMode: PresentMode? = .always
     
@@ -48,6 +49,7 @@ public class Toppon: UIButton {
         if let icon = normalIcon {
             setImage(UIImage(named: icon), for: .normal)
         }
+        self.initPosition = initPosition
         TopponInitial()
     }
     required public init?(coder aDecoder: NSCoder) {
@@ -58,6 +60,14 @@ public class Toppon: UIButton {
         self.addTarget(self, action: #selector(animationPressedScale(sender:)), for: .touchUpInside)
     }
     
+    /// Setting destination position.
+    /// Default to CGPoint(x:0, y:0)
+    public func setDestPosition(_ destPosition: CGPoint) {
+        self.destPosition = destPosition
+    }
+    
+    /// Setting Toppon present mode.
+    /// Default to Toppon.PresentMode.always
     public func setPresentMode(_ presentMode: PresentMode) {
         self.presentMode = presentMode
         if presentMode != .always {
@@ -70,6 +80,7 @@ public class Toppon: UIButton {
         switch self.presentMode {
         case .normal? :
             TopponLog("Present mode set to normal.")
+            animationNormalMoveIn(sender: toppon)
         case .pop? :
             TopponLog("Present mode set to pop.")
             animationPopUp(sender: toppon)
@@ -79,12 +90,21 @@ public class Toppon: UIButton {
             fatalError("Present mode unknown.")
         }
     }
+    public func dismiss(_ toppon: Toppon) {
+        switch self.presentMode {
+        case .normal? :
+            TopponLog("Present mode set to normal.")
+            animationNormalMoveOut(sender: toppon)
+        case .pop? :
+            TopponLog("Present mode set to pop.")
+            animationPopDown(sender: toppon)
+        case .always? :
+            TopponLog("Present mode set to always.")
+        default :
+            fatalError("Present mode unknown.")
+        }
+    }
 }
-
-
-
-
-
 
 public extension Toppon {
     enum PresentMode {
@@ -106,12 +126,30 @@ public extension Toppon {
     }
 }
 
+/// Mark - Animation
+
 public extension Toppon {
-    @objc func animationNormalMoveIn(sender: Toppon) {
-        
+    func animationNormalMoveIn(sender: Toppon) {
+        UIView.animate(withDuration: 1.0,
+                       delay: 0.0,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 0.3,
+                       options: .curveEaseOut,
+                       animations: {
+                        sender.frame.origin = self.destPosition!
+                        sender.alpha = 1.0
+        }, completion: nil)
     }
-    @objc func animationNormalMoveOut(sender: Toppon) {
-        
+    func animationNormalMoveOut(sender: Toppon) {
+        UIView.animate(withDuration: 1.0,
+                       delay: 0.0,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 0.3,
+                       options: .curveEaseIn,
+                       animations: {
+                        sender.frame.origin = self.initPosition!
+                        sender.alpha = 0.0
+        }, completion: nil)
     }
     func animationPopUp(sender: Toppon) {
         sender.transform = CGAffineTransform(scaleX:0.001, y:0.001)
@@ -125,17 +163,27 @@ public extension Toppon {
                         sender.transform = CGAffineTransform.identity.scaledBy(x: 1.0, y: 1.0)
         }, completion: nil)
     }
+    func animationPopDown(sender: Toppon) {
+        UIView.animate(withDuration: 0.3,
+                       delay: 0.0,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 0.3,
+                       options: .curveEaseIn,
+                       animations: {
+                        sender.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
+                        sender.alpha = 0.0
+        }, completion: nil)
+    }
     
     @objc func animationPressedScale(sender: Toppon) {
         delegate?.TopponDidPressed()
         UIView.animate(withDuration: 0.1,
-                       delay: 0,
+                       delay: 0.0,
                        options: .autoreverse,
                        animations: {
                         sender.transform = CGAffineTransform(scaleX: 0.85, y: 0.85)
                     }, completion: {(t) in
                         sender.transform = CGAffineTransform(scaleX: 1, y: 1)
-                        self.animationNormalMoveOut(sender: sender)
         })
     }
     
