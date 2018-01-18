@@ -1,7 +1,5 @@
 # Toppon
-<<<<<<< HEAD
-A Simple scroll-to-top button for iOS UIScrollView.
-=======
+
 An simple **scroll-to** button for iOS UIScrollView, UITabelView, UITextView. **Toppon** is a subclass of UIButton so it not only a **scroll-to** button but a fully customizable UIButton.
 
 
@@ -87,4 +85,4 @@ See [LICENSE](./LICENSE) for details.
 This project is still work in progress.
 Feel free to contact me.
 [Benson Lin](https://www.facebook.com/profile.php?id=100000238070025)
->>>>>>> 188fe3f394d447fb2ecaf85d326844fd52bb9506
+
