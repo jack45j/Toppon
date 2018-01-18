@@ -16,7 +16,6 @@ class ViewController: UIViewController, TopponDelegate, UITextViewDelegate, UISc
     override func viewDidLoad() {
         super.viewDidLoad()
         toppon.linkedTo(UIScrollView: scrollview)
-        toppon.setScrollMode(.top)
         toppon.setPresentMode(.pop)
         toppon.delegate = self
         view.addSubview(toppon)

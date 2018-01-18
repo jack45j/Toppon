@@ -46,7 +46,7 @@ public class Toppon: UIButton {
     private lazy var labelTextFont: UIFont? = UIFont.systemFont(ofSize: 17.0)
     
     /// Determines Toppon is presented or not.
-    public var isPresented: Bool = false
+    private var isPresented: Bool = false
     
     /// Initial and return a Toppon object
     /// parameter initPosition: The initial position of Toppon button.
@@ -82,15 +82,15 @@ extension Toppon {
         self.destPosition = destPosition!
     }
     
-    public func setPresentMode(_ presentMode: PresentMode?) {
-        self.presentMode = presentMode!
+    public func setPresentMode(_ presentMode: PresentMode) {
+        self.presentMode = presentMode
         if presentMode != .always {
             alpha = 0.0
         }
     }
     
-    public func setLabelType(_ labelType: LabelType?) {
-        self.labelType = labelType!
+    public func setLabelType(_ labelType: LabelType) {
+        self.labelType = labelType
     }
     
     public func setLabelText(_ labelText: String?) {
@@ -101,8 +101,8 @@ extension Toppon {
         self.labelTextFont = labelTextFont!
     }
     
-    public func setScrollMode(_ scrollMode: ScrollMode?) {
-        self.scollMode = scrollMode!
+    public func setScrollMode(_ scrollMode: ScrollMode) {
+        self.scollMode = scrollMode
     }
     
     public func linkedTo(UIScrollView: UIScrollView) {

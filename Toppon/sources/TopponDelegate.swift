@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol TopponDelegate: NSObjectProtocol {
-    func ToppondInitiated()
+    func TopponInitiated()
     func TopponDidPressed()
     func TopponWillPresent()
     func TopponWillDismiss()
