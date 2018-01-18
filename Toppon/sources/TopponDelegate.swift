@@ -16,7 +16,7 @@ public protocol TopponDelegate: NSObjectProtocol {
 }
 
 extension TopponDelegate {
-    func ToppondInitiated() {
+    func TopponInitiated() {
         printMessage()
     }
     func TopponDidPressed() {
