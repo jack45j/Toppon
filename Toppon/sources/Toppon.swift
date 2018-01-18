@@ -71,7 +71,7 @@ public class Toppon: UIButton {
     fileprivate func TopponInitial() {
         self.addTarget(self, action: #selector(animationPressedScale(sender:)), for: .touchUpInside)
         self.addTarget(self, action: #selector(scroll), for: .touchUpInside)
-        delegate?.ToppondInitiated()
+        delegate?.TopponInitiated()
     }
 }
 
