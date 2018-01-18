@@ -19,7 +19,7 @@ An simple **scroll-to** button for iOS UIScrollView, UITabelView, UITextView. **
 ---
 
 ##### CocoaPods 
-For Swift
+For `Swift 4.0`
 ```
 pod 'Toppon'
 ```
@@ -86,3 +86,8 @@ This project is still work in progress.
 Feel free to contact me.
 [Benson Lin](https://www.facebook.com/profile.php?id=100000238070025)
 
+
+
+## What features are going to release.
+1) Support storyboard
+2) Optimize methods and animations
