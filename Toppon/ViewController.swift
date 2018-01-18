@@ -9,12 +9,15 @@
 import UIKit
 
 class ViewController: UIViewController, TopponDelegate {
+    @IBOutlet weak var scrollview: UITextView!
     
     let toppon = Toppon(initPosition: CGPoint(x:300, y:100),
                         size: 48,
                         normalIcon: "top48")
     override func viewDidLoad() {
         super.viewDidLoad()
+        toppon.linkedTo(UIScrollView: scrollview)
+        toppon.dismissAfterPressed = false
         toppon.setPresentMode(.pop)
         toppon.delegate = self
         view.addSubview(toppon)

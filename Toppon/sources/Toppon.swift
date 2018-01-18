@@ -1,6 +1,5 @@
 //
 //  Toppon.swift
-//  back-to-top-button
 //
 //  Created by Benson Lin on 2018/1/10.
 //  Copyright © 2018年 YochaStudio. All rights reserved.
@@ -24,6 +23,9 @@ public class Toppon: UIButton {
     /// See the presentMode enum for more detail.
     private lazy var presentMode: PresentMode? = .always
     
+    private lazy var scollMode: ScrollMode? = .top
+    
+    private var linkedUIScrollView: UIScrollView?
     /// Determines the type of Toppon button label position.
     /// Default to LabelType.none
     /// See the LabelType enum for more detail.
@@ -61,6 +63,7 @@ public class Toppon: UIButton {
     }
     fileprivate func TopponInitial() {
         self.addTarget(self, action: #selector(animationPressedScale(sender:)), for: .touchUpInside)
+        self.addTarget(self, action: #selector(scroll), for: .touchUpInside)
     }
 }
 
@@ -88,6 +91,10 @@ extension Toppon {
     
     public func setLabelTextFont(_ labelTextFont: UIFont?) {
         self.labelTextFont = labelTextFont
+    }
+    
+    public func linkedTo(UIScrollView: UIScrollView) {
+        self.linkedUIScrollView = UIScrollView
     }
 }
 
@@ -124,8 +131,14 @@ extension Toppon {
         TopponLog("Toppon present mode \(self.presentMode!) diemissed.")
     }
     
-    public func scroll(To: ScrollType, sender: UIScrollView) {
-        
+    @objc private func scroll() {
+        switch  self.scollMode! {
+        case .top:
+            self.linkedUIScrollView!.setContentOffset(.zero, animated: true)
+        case .bottom:
+            //sender.scrollsToTop
+            break
+        }
     }
 }
 
@@ -134,12 +147,13 @@ extension Toppon {
 public extension Toppon {
     enum PresentMode {
         /// Toppon button will move in from initPosition to destPosition with animation.
+        /// Call func present(_ toppon: Toppon) to present Toppon button.
         case normal
         
         /// Toppon button will popup when func present(_ toppon: Toppon) being called.
         case pop
         
-        /// (DEFAULT) Toppon button will always show.
+        /// (DEFAULT) Toppon button will always show after ViewController launched.
         case always
     }
     
@@ -150,13 +164,13 @@ public extension Toppon {
         case none
     }
     
-    enum ScrollType {
+    enum ScrollMode {
         case top
         case bottom
     }
 }
 
-/// MARK - Animation
+/// MARK - Animations
 
 public extension Toppon {
     func animationNormalMoveIn(sender: Toppon) {
