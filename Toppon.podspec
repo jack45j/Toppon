@@ -16,18 +16,19 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "Toppon"
-  s.version      = "0.0.1"
-  s.summary      = "A lightweight ScrollTo button for iOS UIScrollView"
-
+  s.version      = "0.0.2"
+  s.summary      = "A lightweight Scroll-To button for iOS UIScrollView"
+  s.swift_version = "4.0"
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   s.description  = <<-DESC
+A lightweight Scroll-To button for iOS UIScrollView, UITableView, UITextView. Toppon is a subclass of UIButton. Toppon not only a can be a Scroll-To button but a fully customizable UIButton.
                    DESC
 
-  s.homepage     = "http://github.com/jack45j/Toppon"
+  s.homepage     = "https://github.com/jack45j/Toppon"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
@@ -55,7 +56,7 @@ Pod::Spec.new do |s|
   s.author             = { "jack45j" => "jack45j@gmail.com" }
   # Or just: s.author    = "jack45j"
   # s.authors            = { "jack45j" => "jack45j@gmail.com" }
-  s.social_media_url   = "http://www.facebook.com/profile.php?id=100000238070025”
+  s.social_media_url   = "https://www.facebook.com/profile.php?id=100000238070025"
 
   # ――― Platform Specifics ――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
   #
@@ -63,11 +64,11 @@ Pod::Spec.new do |s|
   #  the deployment target. You can optionally include the target after the platform.
   #
 
-  # s.platform     = :ios
-  s.platform     = :ios, "9.0"
+  s.platform     = :ios
+  # s.platform     = :ios, "9.0"
 
   #  When using multiple platforms
-  # s.ios.deployment_target = "9.0"
+  s.ios.deployment_target = "9.0"
   # s.osx.deployment_target = "10.7"
   # s.watchos.deployment_target = "2.0"
   # s.tvos.deployment_target = "9.0"
@@ -79,7 +80,7 @@ Pod::Spec.new do |s|
   #  Supports git, hg, bzr, svn and HTTP.
   #
 
-  s.source       = { :git => "http://github.com/jack45j/Toppon.git", :tag => s.version }
+  s.source       = { :git => "https://github.com/jack45j/Toppon.git", :tag => "#{s.version}" }
 
 
   # ――― Source Code ―――――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -90,7 +91,7 @@ Pod::Spec.new do |s|
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = “Toppon/sources/*.swift”
+  s.source_files  = "Toppon/sources/*.swift"
   # s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
@@ -116,7 +117,7 @@ Pod::Spec.new do |s|
   #  the lib prefix of their name.
   #
 
-  s.framework  = “UIKit"
+  s.framework  = "UIKit"
   # s.frameworks = "SomeFramework", "AnotherFramework"
 
   # s.library   = "iconv"

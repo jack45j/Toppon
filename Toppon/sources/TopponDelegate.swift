@@ -31,7 +31,7 @@ extension TopponDelegate {
 }
 
 public extension TopponDelegate {
-    private func printMessage(_ function:String = #function) {
+    internal func printMessage(_ function:String = #function) {
         TopponLog("The default implementation of \(function) is being called.")
     }
 }
