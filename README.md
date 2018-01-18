@@ -12,57 +12,75 @@ An simple **scroll-to** button for iOS UIScrollView, UITabelView, UITextView. **
 * Customizable button icon.
 * Multiple delegate methods.
 
-## Demo
-
-
-## Usage
-
-
-#### Requirements
-
-Requires iOS SDK version > 8.0
 
 
 #### Installation
 ---
 
 ##### CocoaPods 
-
+For Swift
+```
+pod 'Toppon'
+```
 
 
 ##### Manual 
+Simply copy files in sources folder into your project.
 
 
 
 #### How to use
 ---
-##### Step 1
+
+Initial a Toppon button in a viewcontroller class scope
+
+```swift
+init(initPosition: CGPoint?, size: Int, normalIcon: String?)
+```
+Use properties to configure Toppoon
+
+```swift
+func setPresentMode(_ presentMode: PresentMode)
+func setDestPosition(_ destPosition: CGPoint?)
+func setScrollMode(_ scrollMode: ScrollMode)
+func linkedTo(UIScrollView: UIScrollView)
+```
+
+##### Delegate methods
+
+```swift
+optional func TopponInitiated()
+optional func TopponDidPressed()
+optional func TopponWillPresent()
+optional func TopponWillDismiss()
+```
 
 
 
-##### Step 2
+##### Present and Dismiss
+call present and dismiss methods when yu need it.
+```swift
+public func present(_ toppon: Toppon)
+public func dismiss(_ toppon: Toppon)
+```
+###### For example
+You can present and dismiss Toppon button in your ScrollViewDelegate.
 
+```swift
+if scrollview.contentOffset.y >= 30 {
+    toppon.present(toppon)
+} else {
+    toppon.present(toppon)
+}
+```
 
-
-##### Step 3
-
-
-
-
-
-## Sample Project
-
-For more info check the **Examples** project. Everything is there.
+## License
+Toppon is released under the MIT license.
+See [LICENSE](./LICENSE) for details.
 
 
 
 ## Author
-
-
-## Credits
-
-
-## License
-
-Toppon is available under the MIT license. 
-See [License.md](https://github.com/manuelescrig/MEVFloatingButton/blob/master/LICENSE.md)
+This project is still work in progress.
+Feel free to contact me.
+[Benson Lin](https://www.facebook.com/profile.php?id=100000238070025)
