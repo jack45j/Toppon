@@ -18,28 +18,35 @@ public class Toppon: UIButton {
     private lazy var destPosition: CGPoint? = CGPoint(x:0, y:0)
     private lazy var initPosition: CGPoint? = CGPoint(x:0, y:0)
     
-    /// Determines the type of Toppon button present mode.
-    /// Default to Toppon.PresentMode.always
-    /// See the presentMode enum for more detail.
-    private lazy var presentMode: PresentMode? = .always
-    
-    private lazy var scollMode: ScrollMode? = .top
-    
+    /// Link a UIScrollView or its subclass to Toppon.
+    /// The UIScrollView will scroll to top/bottom after Toppon pressed.
     private var linkedUIScrollView: UIScrollView?
+    
+    /// Determines the type of Toppon button present mode.
+    /// DEFAULT to Toppon.PresentMode.always
+    /// See the presentMode enumerated for more detail.
+    private lazy var presentMode: PresentMode = .always
+    
+    /// Determines the type of Toppon button scroll mode.
+    /// DEFAULT to Toppon.ScrollMode.top
+    /// See the ScrollMode enumerated for more detail.
+    private lazy var scollMode: ScrollMode = .top
+    
     /// Determines the type of Toppon button label position.
-    /// Default to LabelType.none
-    /// See the LabelType enum for more detail.
-    private lazy var labelType: LabelType? = .none
+    /// DEFAULT to LabelType.none
+    /// See the LabelType enumerated for more detail.
+    private lazy var labelType: LabelType = .none
     
     /// Label text for Toppon button.
-    /// Default to LabelType.none
+    /// DEFAULT to LabelType.none
     /// Set LabelType to others for displaying label text.
     private lazy var labelText: String? = "Top"
     
     /// Custom label text font style and size.
     private lazy var labelTextFont: UIFont? = UIFont.systemFont(ofSize: 17.0)
     
-    public lazy var dismissAfterPressed: Bool? = false
+    /// Determines Toppon is presented or not.
+    public var isPresented: Bool = false
     
     /// Initial and return a Toppon object
     /// parameter initPosition: The initial position of Toppon button.
@@ -64,6 +71,7 @@ public class Toppon: UIButton {
     fileprivate func TopponInitial() {
         self.addTarget(self, action: #selector(animationPressedScale(sender:)), for: .touchUpInside)
         self.addTarget(self, action: #selector(scroll), for: .touchUpInside)
+        delegate?.ToppondInitiated()
     }
 }
 
@@ -71,18 +79,18 @@ public class Toppon: UIButton {
 
 extension Toppon {
     public func setDestPosition(_ destPosition: CGPoint?) {
-        self.destPosition = destPosition
+        self.destPosition = destPosition!
     }
     
     public func setPresentMode(_ presentMode: PresentMode?) {
-        self.presentMode = presentMode
+        self.presentMode = presentMode!
         if presentMode != .always {
             alpha = 0.0
         }
     }
     
     public func setLabelType(_ labelType: LabelType?) {
-        self.labelType = labelType
+        self.labelType = labelType!
     }
     
     public func setLabelText(_ labelText: String?) {
@@ -90,7 +98,11 @@ extension Toppon {
     }
     
     public func setLabelTextFont(_ labelTextFont: UIFont?) {
-        self.labelTextFont = labelTextFont
+        self.labelTextFont = labelTextFont!
+    }
+    
+    public func setScrollMode(_ scrollMode: ScrollMode?) {
+        self.scollMode = scrollMode!
     }
     
     public func linkedTo(UIScrollView: UIScrollView) {
@@ -102,42 +114,42 @@ extension Toppon {
 
 extension Toppon {
     public func present(_ toppon: Toppon) {
-        delegate?.TopponWillPresent()
-        switch self.presentMode {
-        case .normal? :
-            animationNormalMoveIn(sender: toppon)
-        case .pop? :
-            animationPopUp(sender: toppon)
-        case .always? :
-            break
-        default :
-            fatalError("Present mode unknown.")
+        if !isPresented {
+            delegate?.TopponWillPresent()
+            switch self.presentMode {
+            case .normal :
+                animationNormalMoveIn(sender: toppon)
+            case .pop :
+                animationPopUp(sender: toppon)
+            case .always :
+                break
+            }
+            isPresented = true
         }
-        TopponLog("Toppon present mode \(self.presentMode!) presented.")
     }
     
     public func dismiss(_ toppon: Toppon) {
-        delegate?.TopponWillDismiss()
-        switch self.presentMode {
-        case .normal? :
-            animationNormalMoveOut(sender: toppon)
-        case .pop? :
-            animationPopDown(sender: toppon)
-        case .always? :
-            break
-        default :
-            fatalError("Present mode unknown.")
+        if isPresented {
+            delegate?.TopponWillDismiss()
+            switch self.presentMode {
+            case .normal :
+                animationNormalMoveOut(sender: toppon)
+            case .pop :
+                animationPopDown(sender: toppon)
+            case .always :
+                break
+            }
+            isPresented = false
         }
-        TopponLog("Toppon present mode \(self.presentMode!) diemissed.")
     }
     
     @objc private func scroll() {
-        switch  self.scollMode! {
+        switch  self.scollMode {
         case .top:
             self.linkedUIScrollView!.setContentOffset(.zero, animated: true)
         case .bottom:
-            //sender.scrollsToTop
-            break
+            let bottomOffset = linkedUIScrollView!.contentSize.height - linkedUIScrollView!.bounds.size.height
+            self.linkedUIScrollView!.setContentOffset(CGPoint(x: 0, y: bottomOffset), animated: true)
         }
     }
 }
@@ -146,15 +158,15 @@ extension Toppon {
 
 public extension Toppon {
     enum PresentMode {
+        /// (DEFAULT) Toppon button will always show after ViewController launched.
+        case always
+        
         /// Toppon button will move in from initPosition to destPosition with animation.
         /// Call func present(_ toppon: Toppon) to present Toppon button.
         case normal
         
         /// Toppon button will popup when func present(_ toppon: Toppon) being called.
         case pop
-        
-        /// (DEFAULT) Toppon button will always show after ViewController launched.
-        case always
     }
     
     enum LabelType {
@@ -165,7 +177,10 @@ public extension Toppon {
     }
     
     enum ScrollMode {
+        /// (DEFAULT) The linked UIScrollView will scroll to top after Toppon pressed.
         case top
+        
+        /// The linked UIScrollView will scroll to bottom after Toppon pressed.
         case bottom
     }
 }
