@@ -15,38 +15,38 @@ public class Toppon: UIButton {
     
     /// Destination position of Topon button.
     /// Will not be use if presentMode isn't Toppon.PresentMode.normal
-    private lazy var destPosition: CGPoint? = CGPoint(x:0, y:0)
-    private lazy var initPosition: CGPoint? = CGPoint(x:0, y:0)
+    internal lazy var destPosition: CGPoint? = CGPoint(x:0, y:0)
+    internal lazy var initPosition: CGPoint? = CGPoint(x:0, y:0)
     
     /// Link a UIScrollView or its subclass to Toppon.
     /// The UIScrollView will scroll to top/bottom after Toppon pressed.
-    private var linkedUIScrollView: UIScrollView?
+    internal var linkedUIScrollView: UIScrollView?
     
     /// Determines the type of Toppon button present mode.
     /// DEFAULT to Toppon.PresentMode.always
     /// See the presentMode enumerated for more detail.
-    private lazy var presentMode: PresentMode = .always
+    internal lazy var presentMode: PresentMode = .always
     
     /// Determines the type of Toppon button scroll mode.
     /// DEFAULT to Toppon.ScrollMode.top
     /// See the ScrollMode enumerated for more detail.
-    private lazy var scollMode: ScrollMode = .top
+    internal lazy var scollMode: ScrollMode = .top
     
     /// Determines the type of Toppon button label position.
     /// DEFAULT to LabelType.none
     /// See the LabelType enumerated for more detail.
-    private lazy var labelType: LabelType = .none
+    internal lazy var labelType: LabelType = .none
     
     /// Label text for Toppon button.
     /// DEFAULT to LabelType.none
     /// Set LabelType to others for displaying label text.
-    private lazy var labelText: String? = "Top"
+    internal lazy var labelText: String? = "Top"
     
     /// Custom label text font style and size.
-    private lazy var labelTextFont: UIFont? = UIFont.systemFont(ofSize: 17.0)
+    internal lazy var labelTextFont: UIFont? = UIFont.systemFont(ofSize: 17.0)
     
     /// Determines Toppon is presented or not.
-    private var isPresented: Bool = false
+    internal var isPresented: Bool = false
     
     /// Initial and return a Toppon object
     /// parameter initPosition: The initial position of Toppon button.
@@ -89,17 +89,17 @@ extension Toppon {
         }
     }
     
-    public func setLabelType(_ labelType: LabelType) {
-        self.labelType = labelType
-    }
-    
-    public func setLabelText(_ labelText: String?) {
-        self.labelText = labelText!
-    }
-    
-    public func setLabelTextFont(_ labelTextFont: UIFont?) {
-        self.labelTextFont = labelTextFont!
-    }
+//    public func setLabelType(_ labelType: LabelType) {
+//        self.labelType = labelType
+//    }
+//    
+//    public func setLabelText(_ labelText: String?) {
+//        self.labelText = labelText!
+//    }
+//    
+//    public func setLabelTextFont(_ labelTextFont: UIFont?) {
+//        self.labelTextFont = labelTextFont!
+//    }
     
     public func setScrollMode(_ scrollMode: ScrollMode) {
         self.scollMode = scrollMode
@@ -143,7 +143,7 @@ extension Toppon {
         }
     }
     
-    @objc private func scroll() {
+    @objc internal func scroll() {
         switch  self.scollMode {
         case .top:
             self.linkedUIScrollView!.setContentOffset(.zero, animated: true)
@@ -187,7 +187,7 @@ public extension Toppon {
 
 /// MARK - Animations
 
-public extension Toppon {
+private extension Toppon {
     func animationNormalMoveIn(sender: Toppon) {
         UIView.animate(withDuration: 1.0,
                        delay: 0.0,
