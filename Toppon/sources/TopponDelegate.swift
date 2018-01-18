@@ -9,12 +9,16 @@
 import Foundation
 
 public protocol TopponDelegate: NSObjectProtocol {
+    func TopponInitiated()
     func TopponDidPressed()
     func TopponWillPresent()
     func TopponWillDismiss()
 }
 
 extension TopponDelegate {
+    func ToppondInitiated() {
+        printMessage()
+    }
     func TopponDidPressed() {
         printMessage()
     }
@@ -28,6 +32,6 @@ extension TopponDelegate {
 
 public extension TopponDelegate {
     private func printMessage(_ function:String = #function) {
-        TopponLog("The default implementation of \(function) is being called. You can ignore this message if you do not care to implement this method in your `SirenDelegate` conforming structure.")
+        TopponLog("The default implementation of \(function) is being called.")
     }
 }

@@ -18,7 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		93F90F7920064F9F0073FDC7 /* back-to-top-button.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "back-to-top-button.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		93F90F7920064F9F0073FDC7 /* Toppon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Toppon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93F90F7C20064F9F0073FDC7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93F90F7E20064F9F0073FDC7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		93F90F8120064F9F0073FDC7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -44,7 +44,7 @@
 		93F90F7020064F9F0073FDC7 = {
 			isa = PBXGroup;
 			children = (
-				93F90F7B20064F9F0073FDC7 /* back-to-top-button */,
+				93F90F7B20064F9F0073FDC7 /* Toppon */,
 				93F90F7A20064F9F0073FDC7 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -52,12 +52,12 @@
 		93F90F7A20064F9F0073FDC7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				93F90F7920064F9F0073FDC7 /* back-to-top-button.app */,
+				93F90F7920064F9F0073FDC7 /* Toppon.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
 		};
-		93F90F7B20064F9F0073FDC7 /* back-to-top-button */ = {
+		93F90F7B20064F9F0073FDC7 /* Toppon */ = {
 			isa = PBXGroup;
 			children = (
 				93F90F912006506C0073FDC7 /* sources */,
@@ -68,7 +68,7 @@
 				93F90F8520064F9F0073FDC7 /* LaunchScreen.storyboard */,
 				93F90F8820064F9F0073FDC7 /* Info.plist */,
 			);
-			path = "back-to-top-button";
+			path = Toppon;
 			sourceTree = "<group>";
 		};
 		93F90F912006506C0073FDC7 /* sources */ = {
@@ -84,9 +84,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		93F90F7820064F9F0073FDC7 /* back-to-top-button */ = {
+		93F90F7820064F9F0073FDC7 /* Toppon */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 93F90F8B20064F9F0073FDC7 /* Build configuration list for PBXNativeTarget "back-to-top-button" */;
+			buildConfigurationList = 93F90F8B20064F9F0073FDC7 /* Build configuration list for PBXNativeTarget "Toppon" */;
 			buildPhases = (
 				93F90F7520064F9F0073FDC7 /* Sources */,
 				93F90F7620064F9F0073FDC7 /* Frameworks */,
@@ -96,9 +96,9 @@
 			);
 			dependencies = (
 			);
-			name = "back-to-top-button";
+			name = Toppon;
 			productName = "back-to-top-button";
-			productReference = 93F90F7920064F9F0073FDC7 /* back-to-top-button.app */;
+			productReference = 93F90F7920064F9F0073FDC7 /* Toppon.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -117,7 +117,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 93F90F7420064F9F0073FDC7 /* Build configuration list for PBXProject "back-to-top-button" */;
+			buildConfigurationList = 93F90F7420064F9F0073FDC7 /* Build configuration list for PBXProject "Toppon" */;
 			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -130,7 +130,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				93F90F7820064F9F0073FDC7 /* back-to-top-button */,
+				93F90F7820064F9F0073FDC7 /* Toppon */,
 			);
 		};
 /* End PBXProject section */
@@ -296,7 +296,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 79399T3H3C;
-				INFOPLIST_FILE = "back-to-top-button/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Toppon/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "YochaStudio.back-to-top-button";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -311,7 +312,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 79399T3H3C;
-				INFOPLIST_FILE = "back-to-top-button/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Toppon/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "YochaStudio.back-to-top-button";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -323,7 +325,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		93F90F7420064F9F0073FDC7 /* Build configuration list for PBXProject "back-to-top-button" */ = {
+		93F90F7420064F9F0073FDC7 /* Build configuration list for PBXProject "Toppon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				93F90F8920064F9F0073FDC7 /* Debug */,
@@ -332,7 +334,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		93F90F8B20064F9F0073FDC7 /* Build configuration list for PBXNativeTarget "back-to-top-button" */ = {
+		93F90F8B20064F9F0073FDC7 /* Build configuration list for PBXNativeTarget "Toppon" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				93F90F8C20064F9F0073FDC7 /* Debug */,
