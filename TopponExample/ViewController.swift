@@ -45,15 +45,15 @@ class ViewController: UIViewController, TopponDelegate, UITextViewDelegate, UISc
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         if scrollview1.contentOffset.y > 30.0 {
-            toppon1.present(toppon1)
+            toppon1.present()
         } else {
-            toppon1.dismiss(toppon1)
+            toppon1.dismiss()
         }
         
         if scrollview2.contentOffset.y < scrollview2.contentSize.height - scrollview2.bounds.size.height - 30.0 {
-            toppon2.present(toppon2)
+            toppon2.present()
         } else {
-            toppon2.dismiss(toppon2)
+            toppon2.dismiss()
         }
     }
 }
