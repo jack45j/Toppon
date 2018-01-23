@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,20 +19,228 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="1Yp-l5-BBF">
-                                <rect key="frame" x="67" y="90" width="240" height="199"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="eyU-Iv-bKg">
+                                <rect key="frame" x="0.0" y="20" width="375" height="631"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Yp-l5-BBF">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="199.5"/>
+                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <mutableString key="text">Taylor Swift 
+
+Look What You Made Me Do
+
+I don't like your little games
+Don't like your tilted stage
+The role you made me play
+Of the fool, no, I don't like you
+I don't like your perfect crime
+How you laugh when you lie
+You said the gun was mine
+Isn't cool, no, I don't like you (oh!)
+
+But I got smarter, I got harder in the nick of time
+Honey, I rose up from the dead, I do it all the time
+I've got a list of names and yours is in red, underlined
+I check it once, then I check it twice, oh!
+
+Ooh, look what you made me do
+Look what you made me do
+Look what you just made me do
+Look what you just made me
+Ooh, look what you made me do
+Look what you made me do
+Look what you just made me do
+Look what you just made me do
+
+I don't like your kingdom keys
+They once belonged to me
+You ask me for a place to sleep
+Locked me out and threw a feast (what?)
+The world moves on, another day, another drama, drama
+But not for me, not for me, all I think about is karma
+And then the world moves on, but one thing's for sure
+Maybe I got mine, but you'll all get yours
+
+But I got smarter, I got harder in the nick of time
+Honey, I rose up from the dead, I do it all the time
+
+I've got a list of names and yours is in red, underlined
+I check it once, then I check it twice, oh!
+
+Ooh, look what you made me do
+Look what you made me do
+Look what you just made me do
+Look what you just made me
+Ooh, look what you made me do
+Look what you made me do
+Look what you just made me do
+Look what you just made me do
+
+I don't trust nobody and nobody trusts me
+I'll be the actress starring in your bad dreams
+I don't trust nobody and nobody trusts me
+I'll be the actress starring in your bad dreams
+I don't trust nobody and nobody trusts me
+I'll be the actress starring in your bad dreams
+I don't trust nobody and nobody trusts me
+I'll be the actress starring in your bad dreams
+(Look what you made me do)
+(Look what you made me do)
+'I'm sorry, the old Taylor can't come to the phone right now.'
+'Why?'
+'Oh, 'cause she's dead!' (ohh!)
+
+Ooh, look what you made me do
+Look what you made me do
+Look what you just made me do
+Look what you just made me
+Ooh, look what you made me do
+Look what you made me do
+Look what you just made me do
+Look what you just made me do</mutableString>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Huh-kg-D13">
+                                        <rect key="frame" x="0.0" y="215.5" width="375" height="200"/>
+                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <mutableString key="text">Apink 
+
+All For You
+
+벌써 며칠째 전화도 없는 너
+얼마 후면 나의 생일 이란 걸 아는지
+눈치도 없이 시간은 자꾸만 흘러가고
+난 미움보다 걱정스런 맘에
+무작정 찾아간 너의 골목 어귀에서
+생각지 못한 웃으며 반기는 너를 봤어
+
+사실은 말야 나 많이 고민했어
+네게 아무것도 해줄 수 없는걸
+아주 많이 모자라도 가진 것 없어도
+이런 나라도 받아 줄래
+
+너를 위해서~ 너만을 위해서
+난 세상 모든 걸 다 안겨 주지는 못하지만
+난 너에게만 이제 약속할게 오직 너를 위한 내가 될게
+
+Is Only For You Just Wanna Be For You
+넌 그렇게 지금 모습 그대로 내 곁에 있으면 돼
+난 다시 태어나도 영원히 너만 바라볼게
+
+
+넌 모르지만 조금은 힘들었어
+네게 어울리는 사람이 나인지
+
+그건 내가 아니라도 다른 누구라도
+이젠 그런 마음 버릴래
+
+너를 위해서 너만을 위해서
+난 세상 모든 걸 다 안겨 주지는 못하지만
+난 너에게만 이제 약속할게 오직 너를 위한 내가 될게
+
+Is Only For You Just Wanna Be For You
+넌 그렇게 지금 모습 그대로 내 곁에 있으면 돼
+난 다시 태어나도 영원히 너만 바라볼게
+
+
+(Love) 내 작은 맘속을
+(Oh Love) 네 향기로 채울래
+그 속에 영원히 갇혀 버린 데도
+난 행복 할 수 있도록
+
+
+너를 위해서 너를 위해서 너만을 위해서
+난 세상 모든 걸 다 안겨 주지는 못하지만
+난 너에게만 이제 약속할게 오직 너를 위한 내가 될게
+
+Is Only For You Just Wanna Be For You
+넌 그렇게 지금 모습 그대로 내 곁에 있으면 돼
+난 다시 태어나도 영원히 너만 바라볼게</mutableString>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IS3-Sk-YSi">
+                                        <rect key="frame" x="0.0" y="431.5" width="375" height="199.5"/>
+                                        <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
+                                        <mutableString key="text">李宗盛  因為單身的緣故  因為單身的緣故
+日子過得比較素
+剛開始有點難度
+現在比較知道怎麼對付
+偶爾我難受的時候
+就走近南面的窗戶
+看看世界給我是清朗還是霧
+喜歡獨處並不等於
+蓄意陷溺在孤獨
+我相信當無其他救贖
+人能格外的清楚
+如此這般的活著
+並不意味我再也不貪圖
+我只是 比你忍得住 我忍得住
+世界是一堂佈景
+人生是一條路
+我既不是主角也不能決定起伏
+至少我能決定怎麼進 怎麼出
+迎風起舞 讓月光愛撫
+我為王在自己的國度
+每個旋轉都感觸
+每個震顫都表露
+先徹底抽離 再全部投入
+迎風起舞 讓月光愛撫
+我為王在自己的國度
+我在專心支解虛無
+我把僅存慾望去骨
+我像巫師得 專心練法術
+
+因為單身的緣故
+日子過得比較素
+剛開始有點難度
+現在比較知道怎麼對付
+偶爾我難受的時候
+就走近南面的窗戶
+看看世界給我是清朗還是霧
+喜歡獨處並不等於
+蓄意陷溺在孤獨
+我相信當無其他救贖
+人能格外的清楚
+如此這般的活著
+並不意味我再也不貪圖
+我只是 比你忍得住 我忍得住
+世界是一堂佈景
+人生是一條路
+我既不是主角也不能決定起伏
+至少我能決定怎麼進 怎麼出
+迎風起舞 讓月光愛撫
+我為王在自己的國度
+每個旋轉都感觸
+每個震顫都表露
+先徹底抽離 再全部投入
+迎風起舞 讓月光愛撫
+我為王在自己的國度
+我在專心支解虛無
+我把僅存慾望去骨
+我像巫師得 專心練法術
+我是巫師 我練我的法術
+日子過得比較素</mutableString>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="eyU-Iv-bKg" secondAttribute="bottom" constant="16" id="ABO-SP-8fr"/>
+                            <constraint firstItem="eyU-Iv-bKg" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="20" id="QMY-2i-TgY"/>
+                            <constraint firstItem="eyU-Iv-bKg" firstAttribute="leadingMargin" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="WCP-XZ-AHN"/>
+                            <constraint firstAttribute="trailing" secondItem="eyU-Iv-bKg" secondAttribute="trailing" id="tes-jj-Yr2"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="scrollview" destination="1Yp-l5-BBF" id="7j9-pt-RsR"/>
+                        <outlet property="scrollview1" destination="Huh-kg-D13" id="Xax-2c-XR5"/>
+                        <outlet property="scrollview2" destination="IS3-Sk-YSi" id="Lsv-lq-8gz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

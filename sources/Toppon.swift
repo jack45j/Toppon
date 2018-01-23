@@ -15,38 +15,29 @@ public class Toppon: UIButton {
     
     /// Destination position of Topon button.
     /// Will not be use if presentMode isn't Toppon.PresentMode.normal
-    internal lazy var destPosition: CGPoint? = CGPoint(x:0, y:0)
-    internal lazy var initPosition: CGPoint? = CGPoint(x:0, y:0)
+    public lazy var destPosition: CGPoint? = CGPoint(x:0, y:0)
+    public lazy var initPosition: CGPoint? = CGPoint(x:0, y:0)
     
     /// Link a UIScrollView or its subclass to Toppon.
     /// The UIScrollView will scroll to top/bottom after Toppon pressed.
-    internal var linkedUIScrollView: UIScrollView?
+    public var linkedUIScrollView: UIScrollView?
     
     /// Determines the type of Toppon button present mode.
     /// DEFAULT to Toppon.PresentMode.always
     /// See the presentMode enumerated for more detail.
-    internal lazy var presentMode: PresentMode = .always
+    public var presentMode: PresentMode = .always {
+        didSet {
+            Update()
+        }
+    }
     
     /// Determines the type of Toppon button scroll mode.
     /// DEFAULT to Toppon.ScrollMode.top
     /// See the ScrollMode enumerated for more detail.
-    internal lazy var scollMode: ScrollMode = .top
-    
-    /// Determines the type of Toppon button label position.
-    /// DEFAULT to LabelType.none
-    /// See the LabelType enumerated for more detail.
-    internal lazy var labelType: LabelType = .none
-    
-    /// Label text for Toppon button.
-    /// DEFAULT to LabelType.none
-    /// Set LabelType to others for displaying label text.
-    internal lazy var labelText: String? = "Top"
-    
-    /// Custom label text font style and size.
-    internal lazy var labelTextFont: UIFont? = UIFont.systemFont(ofSize: 17.0)
+    public lazy var scollMode: ScrollMode = .top
     
     /// Determines Toppon is presented or not.
-    internal var isPresented: Bool = false
+    public var isPresented: Bool = false
     
     /// Initial and return a Toppon object
     /// parameter initPosition: The initial position of Toppon button.
@@ -62,6 +53,9 @@ public class Toppon: UIButton {
             setImage(UIImage(named: icon), for: .normal)
         }
         self.initPosition = initPosition
+        
+        self.addTarget(self, action: #selector(animationPressedScale(sender:)), for: .touchUpInside)
+        self.addTarget(self, action: #selector(scroll), for: .touchUpInside)
         TopponInitial()
     }
     required public init?(coder aDecoder: NSCoder) {
@@ -69,42 +63,19 @@ public class Toppon: UIButton {
         fatalError("init(coder:) has not been implemented")
     }
     fileprivate func TopponInitial() {
-        self.addTarget(self, action: #selector(animationPressedScale(sender:)), for: .touchUpInside)
-        self.addTarget(self, action: #selector(scroll), for: .touchUpInside)
         delegate?.TopponInitiated()
+    }
+    
+    fileprivate func Update() {
+        if presentMode != .always {
+            alpha = 0.0
+        }
     }
 }
 
 /// MARK - Helpers (Config)
 
 extension Toppon {
-    public func setDestPosition(_ destPosition: CGPoint?) {
-        self.destPosition = destPosition!
-    }
-    
-    public func setPresentMode(_ presentMode: PresentMode) {
-        self.presentMode = presentMode
-        if presentMode != .always {
-            alpha = 0.0
-        }
-    }
-    
-//    public func setLabelType(_ labelType: LabelType) {
-//        self.labelType = labelType
-//    }
-//    
-//    public func setLabelText(_ labelText: String?) {
-//        self.labelText = labelText!
-//    }
-//    
-//    public func setLabelTextFont(_ labelTextFont: UIFont?) {
-//        self.labelTextFont = labelTextFont!
-//    }
-    
-    public func setScrollMode(_ scrollMode: ScrollMode) {
-        self.scollMode = scrollMode
-    }
-    
     public func linkedTo(UIScrollView: UIScrollView) {
         self.linkedUIScrollView = UIScrollView
     }
@@ -167,13 +138,6 @@ public extension Toppon {
         
         /// Toppon button will popup when func present(_ toppon: Toppon) being called.
         case pop
-    }
-    
-    enum LabelType {
-        case top
-        case center
-        case bottom
-        case none
     }
     
     enum ScrollMode {
