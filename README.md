@@ -1,6 +1,6 @@
 # Toppon
 
-An simple **scroll-to** button for iOS UIScrollView, UITabelView, UITextView. **Toppon** is a subclass of UIButton so it not only a **scroll-to** button but a fully customizable UIButton.
+A lightweight **Scroll-To** button for iOS UIScrollView, UITabelView, UITextView. **Toppon** is a subclass of UIButton. Its not only a **Scroll-To** button but a fully customizable UIButton.
 
 
  
@@ -19,7 +19,7 @@ An simple **scroll-to** button for iOS UIScrollView, UITabelView, UITextView. **
 ---
 
 ##### CocoaPods 
-For Swift
+For `Swift 4.0`
 ```
 pod 'Toppon'
 ```
@@ -64,14 +64,14 @@ call present and dismiss methods when yu need it.
 public func present(_ toppon: Toppon)
 public func dismiss(_ toppon: Toppon)
 ```
-###### For example
+###### For Example
 You can present and dismiss Toppon button in your ScrollViewDelegate.
 
 ```swift
 if scrollview.contentOffset.y >= 30 {
     toppon.present(toppon)
 } else {
-    toppon.present(toppon)
+    toppon.dismiss(toppon)
 }
 ```
 
@@ -86,3 +86,9 @@ This project is still work in progress.
 Feel free to contact me.
 [Benson Lin](https://www.facebook.com/profile.php?id=100000238070025)
 
+
+
+## What features are going to release.
+1) Support storyboard
+2) Optimize methods and animations
+3) Add a Label above/under Toppon button
