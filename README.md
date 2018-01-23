@@ -2,7 +2,7 @@
 
 A lightweight **Scroll-To** button for iOS UIScrollView, UITabelView, UITextView. **Toppon** is a subclass of UIButton. Its not only a **Scroll-To** button but a fully customizable UIButton.
 
-
+![Preview](https://github.com/jack45j/Toppon/blob/master/Assets/demo.gif)
 
 ## Features
 * Lightweight
