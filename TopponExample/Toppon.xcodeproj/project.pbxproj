@@ -60,7 +60,7 @@
 		93F90F7B20064F9F0073FDC7 /* Toppon */ = {
 			isa = PBXGroup;
 			children = (
-				93F90F912006506C0073FDC7 /* sources */,
+				93F90F912006506C0073FDC7 /* Sources */,
 				93F90F7C20064F9F0073FDC7 /* AppDelegate.swift */,
 				93F90F7E20064F9F0073FDC7 /* ViewController.swift */,
 				93F90F8020064F9F0073FDC7 /* Main.storyboard */,
@@ -68,17 +68,18 @@
 				93F90F8520064F9F0073FDC7 /* LaunchScreen.storyboard */,
 				93F90F8820064F9F0073FDC7 /* Info.plist */,
 			);
-			path = Toppon;
+			name = Toppon;
 			sourceTree = "<group>";
 		};
-		93F90F912006506C0073FDC7 /* sources */ = {
+		93F90F912006506C0073FDC7 /* Sources */ = {
 			isa = PBXGroup;
 			children = (
 				93F90F8E2006503B0073FDC7 /* Toppon.swift */,
 				93F90F92200651630073FDC7 /* TopponDelegate.swift */,
 				93F90F942006B0B40073FDC7 /* TopponLog.swift */,
 			);
-			path = sources;
+			name = Sources;
+			path = ../Sources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,7 +299,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 79399T3H3C;
-				INFOPLIST_FILE = "$(SRCROOT)/Toppon/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = YochaStudio.Toppon;
@@ -314,7 +315,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 79399T3H3C;
-				INFOPLIST_FILE = "$(SRCROOT)/Toppon/Info.plist";
+				INFOPLIST_FILE = "$(SRCROOT)/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = YochaStudio.Toppon;

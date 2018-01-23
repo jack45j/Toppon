@@ -91,7 +91,7 @@ A lightweight Scroll-To button for iOS UIScrollView, UITableView, UITextView. To
   #  Not including the public_header_files will make all headers public.
   #
 
-  s.source_files  = "Toppon/sources/*.swift"
+  s.source_files  = "Sources/*.swift"
   # s.exclude_files = "Classes/Exclude"
 
   # s.public_header_files = "Classes/**/*.h"
