@@ -64,17 +64,17 @@ optional func TopponWillDismiss()
 ##### Present and Dismiss
 Call present and dismiss methods when you need it.
 ```swift
-public func present(_ toppon: Toppon)
-public func dismiss(_ toppon: Toppon)
+public func present()
+public func dismiss()
 ```
 ###### For Example
 You can present and dismiss Toppon button in your ScrollViewDelegate.
 
 ```swift
 if scrollview.contentOffset.y >= 30 {
-toppon.present(toppon)
+toppon.present()
 } else {
-toppon.dismiss(toppon)
+toppon.dismiss()
 }
 ```
 
