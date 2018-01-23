@@ -9,9 +9,8 @@ import Foundation
 import UIKit
 
 public class Toppon: UIButton {
-    /// The TopponDelegate variable, which should be set if you'd like to be notified.
-    /// See TopponDelegate.swift for more detail.
-    public weak var delegate: TopponDelegate?
+    /// Determines Toppon is presented or not.
+    fileprivate var isPresented: Bool = false
     
     /// Destination position of Topon button.
     /// Will not be use if presentMode isn't Toppon.PresentMode.normal
@@ -27,7 +26,7 @@ public class Toppon: UIButton {
     /// See the presentMode enumerated for more detail.
     public var presentMode: PresentMode = .always {
         didSet {
-            Update()
+            SetUp()
         }
     }
     
@@ -36,8 +35,9 @@ public class Toppon: UIButton {
     /// See the ScrollMode enumerated for more detail.
     public lazy var scollMode: ScrollMode = .top
     
-    /// Determines Toppon is presented or not.
-    public var isPresented: Bool = false
+    /// The TopponDelegate variable, which should be set if you'd like to be notified.
+    /// See TopponDelegate.swift for more detail.
+    public weak var delegate: TopponDelegate?
     
     /// Initial and return a Toppon object
     /// parameter initPosition: The initial position of Toppon button.
@@ -52,21 +52,20 @@ public class Toppon: UIButton {
         if let icon = normalIcon {
             setImage(UIImage(named: icon), for: .normal)
         }
+        
         self.initPosition = initPosition
         
         self.addTarget(self, action: #selector(animationPressedScale(sender:)), for: .touchUpInside)
         self.addTarget(self, action: #selector(scroll), for: .touchUpInside)
-        TopponInitial()
+        
+        delegate?.TopponInitiated()
     }
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
         fatalError("init(coder:) has not been implemented")
     }
-    fileprivate func TopponInitial() {
-        delegate?.TopponInitiated()
-    }
     
-    fileprivate func Update() {
+    fileprivate func SetUp() {
         if presentMode != .always {
             alpha = 0.0
         }
@@ -83,15 +82,15 @@ extension Toppon {
 
 /// MARK - Helpers (Behavior)
 
-extension Toppon {
-    public func present(_ toppon: Toppon) {
+public extension Toppon {
+    public func present() {
         if !isPresented {
             delegate?.TopponWillPresent()
             switch self.presentMode {
             case .normal :
-                animationNormalMoveIn(sender: toppon)
+                animationNormalMoveIn(sender: self)
             case .pop :
-                animationPopUp(sender: toppon)
+                animationPopUp(sender: self)
             case .always :
                 break
             }
@@ -99,14 +98,14 @@ extension Toppon {
         }
     }
     
-    public func dismiss(_ toppon: Toppon) {
+    public func dismiss() {
         if isPresented {
             delegate?.TopponWillDismiss()
             switch self.presentMode {
             case .normal :
-                animationNormalMoveOut(sender: toppon)
+                animationNormalMoveOut(sender: self)
             case .pop :
-                animationPopDown(sender: toppon)
+                animationPopDown(sender: self)
             case .always :
                 break
             }
@@ -114,7 +113,7 @@ extension Toppon {
         }
     }
     
-    @objc internal func scroll() {
+    @objc fileprivate func scroll() {
         switch  self.scollMode {
         case .top:
             self.linkedUIScrollView!.setContentOffset(.zero, animated: true)
@@ -165,7 +164,7 @@ private extension Toppon {
     }
     func animationNormalMoveOut(sender: Toppon) {
         UIView.animate(withDuration: 1.0,
-                       delay: 0.0,
+                       delay: 0.1,
                        usingSpringWithDamping: 0.5,
                        initialSpringVelocity: 0.3,
                        options: .curveEaseIn,
@@ -187,13 +186,14 @@ private extension Toppon {
         }, completion: nil)
     }
     func animationPopDown(sender: Toppon) {
+        sender.transform = CGAffineTransform(scaleX:0.6, y:0.6)
         UIView.animate(withDuration: 0.3,
-                       delay: 0.0,
-                       usingSpringWithDamping: 0.5,
+                       delay: 0.1,
+                       usingSpringWithDamping: 0.4,
                        initialSpringVelocity: 0.3,
                        options: .curveEaseIn,
                        animations: {
-                        sender.transform = CGAffineTransform.identity.scaledBy(x: 0.001, y: 0.001)
+                        sender.transform = CGAffineTransform(scaleX:0, y:0)
                         sender.alpha = 0.0
         }, completion: nil)
     }
