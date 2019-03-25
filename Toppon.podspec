@@ -18,7 +18,7 @@ Pod::Spec.new do |s|
   s.name         = "Toppon"
   s.version      = "0.0.4"
   s.summary      = "A lightweight Scroll-To button for iOS UIScrollView"
-  s.swift_version = "4.0"
+  s.swift_version = "4.2"
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
   #   * Try to keep it short, snappy and to the point.
