@@ -18,7 +18,7 @@ A lightweight **Scroll-To** button for iOS UIScrollView, UITabelView, UITextView
 ---
 
 ##### CocoaPods
-For `Swift 4.0`
+For `Swift 4.2`
 ```ruby
 pod 'Toppon'
 ```
