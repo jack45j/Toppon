@@ -72,9 +72,9 @@ You can present and dismiss Toppon button in your ScrollViewDelegate.
 
 ```swift
 if scrollview.contentOffset.y >= 30 {
-toppon.present()
+  toppon.present()
 } else {
-toppon.dismiss()
+  toppon.dismiss()
 }
 ```
 
