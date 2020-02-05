@@ -20,6 +20,7 @@ class ViewController: UIViewController, TopponDelegate, UITextViewDelegate, UISc
 			.setBackground(color: .yellow)
 			.setTitle("213")
 			.setTitle("333", color: .black, for: .normal)
+			.bind(to: scrollview)
 			.build()
 		
         scrollview.delegate = self

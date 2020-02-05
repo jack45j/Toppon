@@ -51,6 +51,14 @@ extension Builder {
 			return obj
 		}
 	}
+	
+	public func bind(to scrollView: UIScrollView) -> Builder<T> {
+		return Builder {
+			let obj = self.build()
+			obj.bind(scrollView)
+			return obj
+		}
+	}
 }
 
 public protocol Compatible {}
@@ -76,6 +84,8 @@ public class Toppon: UIButton {
 	private var linkedScrollViews: [UIScrollView]!
 		
 	private var image: UIImage? = nil
+	
+	private var distance: CGFloat = 200
     
     /// Determines the type of Toppon button present mode.
     /// DEFAULT to Toppon.PresentMode.always
@@ -92,8 +102,27 @@ public class Toppon: UIButton {
 		setupUI()
 	}
 	
+	override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
+		guard let newValue = change?[NSKeyValueChangeKey.newKey] as? CGPoint else { return }
+		if newValue.y >= self.distance {
+			print("should display")
+		} else {
+			print("should dismiss")
+		}
+	}
+	
+	
+
+	deinit {
+	  self.removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset))
+	}
+	
 	private func setupUI() {
 		
+	}
+	
+	public func bind(_ scrollView: UIScrollView) {
+		scrollView.addObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset), options: [.new], context: nil)
 	}
 }
 
