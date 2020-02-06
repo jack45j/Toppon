@@ -15,6 +15,8 @@
 		93F90F8F2006503B0073FDC7 /* Toppon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F90F8E2006503B0073FDC7 /* Toppon.swift */; };
 		93F90F93200651630073FDC7 /* TopponDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F90F92200651630073FDC7 /* TopponDelegate.swift */; };
 		93F90F952006B0B40073FDC7 /* TopponLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F90F942006B0B40073FDC7 /* TopponLog.swift */; };
+		CE656D5F23EBB85D00D51982 /* Toppon+Compatible.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE656D5E23EBB85D00D51982 /* Toppon+Compatible.swift */; };
+		CE656D6123EBB8D600D51982 /* Toppon+Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE656D6023EBB8D600D51982 /* Toppon+Builder.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +30,8 @@
 		93F90F8E2006503B0073FDC7 /* Toppon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toppon.swift; sourceTree = "<group>"; };
 		93F90F92200651630073FDC7 /* TopponDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopponDelegate.swift; sourceTree = "<group>"; };
 		93F90F942006B0B40073FDC7 /* TopponLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopponLog.swift; sourceTree = "<group>"; };
+		CE656D5E23EBB85D00D51982 /* Toppon+Compatible.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Toppon+Compatible.swift"; path = "../sources/Toppon+Compatible.swift"; sourceTree = "<group>"; };
+		CE656D6023EBB8D600D51982 /* Toppon+Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Toppon+Builder.swift"; path = "../sources/Toppon+Builder.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +79,8 @@
 			isa = PBXGroup;
 			children = (
 				93F90F8E2006503B0073FDC7 /* Toppon.swift */,
+				CE656D5E23EBB85D00D51982 /* Toppon+Compatible.swift */,
+				CE656D6023EBB8D600D51982 /* Toppon+Builder.swift */,
 				93F90F92200651630073FDC7 /* TopponDelegate.swift */,
 				93F90F942006B0B40073FDC7 /* TopponLog.swift */,
 			);
@@ -155,7 +161,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				93F90F7F20064F9F0073FDC7 /* ViewController.swift in Sources */,
+				CE656D5F23EBB85D00D51982 /* Toppon+Compatible.swift in Sources */,
 				93F90F7D20064F9F0073FDC7 /* AppDelegate.swift in Sources */,
+				CE656D6123EBB8D600D51982 /* Toppon+Builder.swift in Sources */,
 				93F90F93200651630073FDC7 /* TopponDelegate.swift in Sources */,
 				93F90F952006B0B40073FDC7 /* TopponLog.swift in Sources */,
 				93F90F8F2006503B0073FDC7 /* Toppon.swift in Sources */,

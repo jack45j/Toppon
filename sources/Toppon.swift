@@ -8,89 +8,20 @@
 import Foundation
 import UIKit
 
-public struct Builder<T: Toppon> {
-	private let _build: () -> T
-
-	@discardableResult
-	public func build() -> T {
-        _build()
-    }
-
-	public init(_ build: @escaping () -> T) {
-        self._build = build
-    }
-
-    public init(_ base: T) {
-        self._build = { base }
-    }
-}
-
-extension Builder {
-	public func setBackground(color: UIColor) -> Builder<T> {
-		return Builder {
-			let obj = self.build()
-			obj.backgroundColor = color
-			return obj
-		}
-	}
-	
-	public func setBackground(image: UIImage, for state: UIControlState = .normal) -> Builder<T> {
-		return Builder {
-			let obj = self.build()
-			obj.setBackgroundImage(image, for: state)
-			return obj
-		}
-	}
-	
-	public func setTitle(_ title: String?, color: UIColor? = nil, for state: UIControlState = .normal) -> Builder<T> {
-		return Builder {
-			let obj = self.build()
-			obj.setTitle(title, for: state)
-			guard let color = color else { return obj }
-			obj.setTitleColor(color, for: state)
-			return obj
-		}
-	}
-	
-	public func bind(to scrollView: UIScrollView) -> Builder<T> {
-		return Builder {
-			let obj = self.build()
-			obj.bind(scrollView)
-			return obj
-		}
-	}
-}
-
-public protocol Compatible {}
-extension Compatible where Self: Toppon {
-    public var bs: Builder<Self> {
-		get { Builder(self) }
-    }
-}
-
-
-#if canImport(Foundation)
-import Foundation
-extension Toppon: Compatible {}
-#endif
-
-
 public class Toppon: UIButton {
     /// Determines Toppon is presented or not.
 	private var isPresented: Bool = false
 	
 	private var CompletionHandler: (() -> Void)? = nil
 	
-	private var linkedScrollViews: [UIScrollView]!
-		
-	private var image: UIImage? = nil
-	
-	private var distance: CGFloat = 200
+	private var offset: CGFloat = 0
     
     /// Determines the type of Toppon button present mode.
     /// DEFAULT to Toppon.PresentMode.always
     /// See the presentMode enumerated for more detail.
     public var presentMode: PresentMode = .always
+    
+    public var scrollMode: ScrollMode = .top
 		
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -104,14 +35,22 @@ public class Toppon: UIButton {
 	
 	override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
 		guard let newValue = change?[NSKeyValueChangeKey.newKey] as? CGPoint else { return }
-		if newValue.y >= self.distance {
-			print("should display")
+        
+		if newValue.y >= self.offset {
+			show()
 		} else {
 			print("should dismiss")
 		}
 	}
-	
-	
+    
+    private func shouldShowButton(newValue: CGPoint) -> Bool {
+        switch self.scrollMode {
+        case .top:
+            return newValue >= self.offset
+        case .bottom:
+            return
+        }
+    }
 
 	deinit {
 	  self.removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset))
@@ -120,15 +59,17 @@ public class Toppon: UIButton {
 	private func setupUI() {
 		
 	}
-	
-	public func bind(_ scrollView: UIScrollView) {
-		scrollView.addObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset), options: [.new], context: nil)
-	}
+    
+    private func show() {
+        
+    }
+    
+    private func dismiss() {
+        
+    }
 }
 
-/// MARK - Helpers (Config)
-
-
+// MARK: - Helper
 
 public extension Toppon {
     enum PresentMode {
@@ -141,5 +82,40 @@ public extension Toppon {
 
         /// Toppon button will popup when func present(_ toppon: Toppon) being called.
         case pop
+        
+        case custom
     }
+    
+    enum ScrollMode {
+        case top
+        case bottom
+    }
+}
+
+// MARK: - private helper
+extension Toppon {
+    
+}
+
+
+extension UIScrollView {
+  var minContentOffset: CGPoint {
+    return CGPoint(
+      x: -contentInset.left,
+      y: -contentInset.top)
+  }
+
+  var maxContentOffset: CGPoint {
+    return CGPoint(
+      x: contentSize.width - bounds.width + contentInset.right,
+      y: contentSize.height - bounds.height + contentInset.bottom)
+  }
+
+  func scrollToMinContentOffset(animated: Bool) {
+    setContentOffset(minContentOffset, animated: animated)
+  }
+
+  func scrollToMaxContentOffset(animated: Bool) {
+    setContentOffset(maxContentOffset, animated: animated)
+  }
 }

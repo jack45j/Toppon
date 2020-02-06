@@ -18,18 +18,13 @@ class ViewController: UIViewController, TopponDelegate, UITextViewDelegate, UISc
                
 		toppon.bs
 			.setBackground(color: .yellow)
-			.setTitle("213")
 			.setTitle("333", color: .black, for: .normal)
-			.bind(to: scrollview)
-			.build()
+			.bind(to: scrollview1)
+            .build()
 		
         scrollview.delegate = self
         scrollview1.delegate = self
         scrollview2.delegate = self
-    }
-    
-    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-		
     }
 }
 
