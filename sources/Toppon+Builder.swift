@@ -26,7 +26,7 @@ public struct Builder<T: Toppon> {
 }
 
 
-extension Builder {
+extension Builder where T: Toppon {
     public func setBackground(color: UIColor) -> Builder<T> {
         return Builder {
             let obj = self.build()
@@ -52,6 +52,14 @@ extension Builder {
             return obj
         }
     }
+	
+	public func style(_ style: T.ScrollMode) -> Builder<T> {
+		return Builder {
+			let obj = self.build()
+			obj.scrollMode = style
+			return obj
+		}
+	}
     
     public func bind(to scrollView: UIScrollView) -> Builder<T> {
         return Builder {

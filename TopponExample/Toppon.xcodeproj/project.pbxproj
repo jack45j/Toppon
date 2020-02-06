@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		46A42EDA23EC5E3800F9E41E /* UIScrollView+Additions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A42ED923EC5E3800F9E41E /* UIScrollView+Additions.swift */; };
 		93F90F7D20064F9F0073FDC7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F90F7C20064F9F0073FDC7 /* AppDelegate.swift */; };
 		93F90F7F20064F9F0073FDC7 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93F90F7E20064F9F0073FDC7 /* ViewController.swift */; };
 		93F90F8220064F9F0073FDC7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 93F90F8020064F9F0073FDC7 /* Main.storyboard */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		46A42ED923EC5E3800F9E41E /* UIScrollView+Additions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIScrollView+Additions.swift"; path = "../sources/UIScrollView+Additions.swift"; sourceTree = "<group>"; };
 		93F90F7920064F9F0073FDC7 /* Toppon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Toppon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		93F90F7C20064F9F0073FDC7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		93F90F7E20064F9F0073FDC7 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				CE656D6023EBB8D600D51982 /* Toppon+Builder.swift */,
 				93F90F92200651630073FDC7 /* TopponDelegate.swift */,
 				93F90F942006B0B40073FDC7 /* TopponLog.swift */,
+				46A42ED923EC5E3800F9E41E /* UIScrollView+Additions.swift */,
 			);
 			name = Sources;
 			path = ../Sources;
@@ -161,6 +164,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				93F90F7F20064F9F0073FDC7 /* ViewController.swift in Sources */,
+				46A42EDA23EC5E3800F9E41E /* UIScrollView+Additions.swift in Sources */,
 				CE656D5F23EBB85D00D51982 /* Toppon+Compatible.swift in Sources */,
 				93F90F7D20064F9F0073FDC7 /* AppDelegate.swift in Sources */,
 				CE656D6123EBB8D600D51982 /* Toppon+Builder.swift in Sources */,

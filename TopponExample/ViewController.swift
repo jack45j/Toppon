@@ -17,6 +17,7 @@ class ViewController: UIViewController, TopponDelegate, UITextViewDelegate, UISc
         super.viewDidLoad()
                
 		toppon.bs
+			.style(.top)
 			.setBackground(color: .yellow)
 			.setTitle("333", color: .black, for: .normal)
 			.bind(to: scrollview1)

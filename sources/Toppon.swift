@@ -12,16 +12,23 @@ public class Toppon: UIButton {
     /// Determines Toppon is presented or not.
 	private var isPresented: Bool = false
 	
-	private var CompletionHandler: (() -> Void)? = nil
+	typealias completionHandler = (() -> Void)?
 	
-	private var offset: CGFloat = 0
+	private var offset: CGFloat = 100
     
-    /// Determines the type of Toppon button present mode.
-    /// DEFAULT to Toppon.PresentMode.always
-    /// See the presentMode enumerated for more detail.
-    public var presentMode: PresentMode = .always
+	private var linkedScrollView: UIScrollView!
+	
+	public var presentMode: PresentMode = .always {
+		didSet {
+			if presentMode != .normal {
+				self.presentDirection = .none
+			}
+		}
+	}
     
     public var scrollMode: ScrollMode = .top
+	
+	public var presentDirection: PresentDirection = .none
 		
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -34,39 +41,25 @@ public class Toppon: UIButton {
 	}
 	
 	override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-		guard let newValue = change?[NSKeyValueChangeKey.newKey] as? CGPoint else { return }
-        
-		if newValue.y >= self.offset {
-			show()
-		} else {
-			print("should dismiss")
-		}
-	}
-    
-    private func shouldShowButton(newValue: CGPoint) -> Bool {
-        switch self.scrollMode {
-        case .top:
-            return newValue >= self.offset
-        case .bottom:
-            return
-        }
-    }
-
-	deinit {
-	  self.removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset))
+		
+		guard let newValue = change?[NSKeyValueChangeKey.newKey] as? CGPoint,
+			  let scrollView = object as? UIScrollView else { return }
+//		TopponLog("\(newValue)")
+		linkedScrollView = scrollView
+		scrollViewOffsetDidChange(to: newValue)
 	}
 	
 	private func setupUI() {
 		
 	}
+
+	deinit {
+	  self.removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset))
+	}
+	
+	
     
-    private func show() {
-        
-    }
     
-    private func dismiss() {
-        
-    }
 }
 
 // MARK: - Helper
@@ -85,6 +78,14 @@ public extension Toppon {
         
         case custom
     }
+	
+	enum PresentDirection {
+		case top
+		case right
+		case bottom
+		case left
+		case none
+	}
     
     enum ScrollMode {
         case top
@@ -94,28 +95,46 @@ public extension Toppon {
 
 // MARK: - private helper
 extension Toppon {
+	
+	private func show() {
+		TopponLog("\(#function)")
+		isPresented = true
+    }
     
-}
-
-
-extension UIScrollView {
-  var minContentOffset: CGPoint {
-    return CGPoint(
-      x: -contentInset.left,
-      y: -contentInset.top)
-  }
-
-  var maxContentOffset: CGPoint {
-    return CGPoint(
-      x: contentSize.width - bounds.width + contentInset.right,
-      y: contentSize.height - bounds.height + contentInset.bottom)
-  }
-
-  func scrollToMinContentOffset(animated: Bool) {
-    setContentOffset(minContentOffset, animated: animated)
-  }
-
-  func scrollToMaxContentOffset(animated: Bool) {
-    setContentOffset(maxContentOffset, animated: animated)
-  }
+    private func dismiss() {
+        TopponLog("\(#function)")
+		isPresented = false
+    }
+	
+	private func scrollViewOffsetDidChange(to newOffset: CGPoint) {
+		guard let scrollView = linkedScrollView else { return }
+		switch scrollMode {
+		case .top:
+			if newOffset.y >= offset {
+				guard !isPresented else { return }
+				show()
+			} else {
+				guard isPresented else { return }
+				dismiss()
+			}
+		case .bottom:
+			if newOffset.y + offset <= scrollView.maxContentOffset.y {
+				guard !isPresented else { return }
+				show()
+			} else {
+				guard isPresented else { return }
+				dismiss()
+			}
+		}
+	}
+	
+	private func shouldShowButton(newOffset: CGPoint) -> Bool {
+		guard let scrollView = linkedScrollView else { return false }
+        switch self.scrollMode {
+        case .top:
+			return newOffset.y >= self.offset
+        case .bottom:
+			return newOffset.y + offset <= scrollView.maxContentOffset.y
+        }
+    }
 }
