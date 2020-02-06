@@ -16,6 +16,7 @@ class ViewController: UIViewController, TopponDelegate, UITextViewDelegate, UISc
     override func viewDidLoad() {
         super.viewDidLoad()
                
+		toppon.presentMode = .pop
 		toppon.bs
 			.style(.top)
 			.setBackground(color: .yellow)

@@ -96,14 +96,28 @@ public extension Toppon {
 // MARK: - private helper
 extension Toppon {
 	
-	private func show() {
+	private func show(completed: (() -> Void)? = nil) {
 		TopponLog("\(#function)")
 		isPresented = true
+		
+		switch presentMode {
+		case .pop:
+			popUpAnimation { completed?() }
+		default:
+			return
+		}
     }
-    
-    private func dismiss() {
+	
+    private func dismiss(completed: (() -> Void)? = nil) {
         TopponLog("\(#function)")
 		isPresented = false
+		
+		switch presentMode {
+		case .pop:
+			popDownAnimation { completed?() }
+		default:
+			return
+		}
     }
 	
 	private func scrollViewOffsetDidChange(to newOffset: CGPoint) {
@@ -137,4 +151,32 @@ extension Toppon {
 			return newOffset.y + offset <= scrollView.maxContentOffset.y
         }
     }
+}
+
+extension Toppon {
+	private func popUpAnimation(completed: (() -> Void)? = nil) {
+		self.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+        self.alpha = 1.0
+        UIView.animate(withDuration: 0.3,
+                       delay: 0.0,
+                       usingSpringWithDamping: 0.5,
+                       initialSpringVelocity: 0.3,
+                       options: .curveEaseInOut,
+                       animations: {
+                        self.transform = CGAffineTransform.identity.scaledBy(x: 1.0, y: 1.0)
+        }, completion: { _ in completed?() })
+	}
+	
+	private func popDownAnimation(completed: (() -> Void)? = nil) {
+		self.transform = CGAffineTransform(scaleX: 1, y: 1)
+		UIView.animate(withDuration: 0.3,
+					   delay: 0.1,
+					   usingSpringWithDamping: 0.4,
+					   initialSpringVelocity: 0.3,
+					   options: .curveEaseIn,
+					   animations: {
+						self.transform = CGAffineTransform(scaleX:0, y:0)
+						self.alpha = 0.0
+		}, completion: { _ in completed?() })
+	}
 }
