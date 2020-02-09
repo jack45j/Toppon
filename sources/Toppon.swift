@@ -20,12 +20,15 @@ public class Toppon: UIButton {
 	
 	public var presentMode: PresentMode = .always {
 		didSet {
-			if presentMode != .normal {
+			switch presentMode {
+			case .normal:
+				return
+			default:
 				self.presentDirection = .none
 			}
 		}
 	}
-    
+	
     public var scrollMode: ScrollMode = .top
 	
 	public var presentDirection: PresentDirection = .none
@@ -44,7 +47,6 @@ public class Toppon: UIButton {
 		
 		guard let newValue = change?[NSKeyValueChangeKey.newKey] as? CGPoint,
 			  let scrollView = object as? UIScrollView else { return }
-//		TopponLog("\(newValue)")
 		linkedScrollView = scrollView
 		scrollViewOffsetDidChange(to: newValue)
 	}
@@ -56,11 +58,68 @@ public class Toppon: UIButton {
 	deinit {
 	  self.removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset))
 	}
-	
-	
-    
-    
 }
+
+extension Builder where T: Toppon {
+    public func setBackground(color: UIColor) -> Builder<T> {
+        return Builder {
+            let obj = self.build()
+            obj.backgroundColor = color
+            return obj
+        }
+    }
+    
+    public func setBackground(image: UIImage, for state: UIControlState = .normal) -> Builder<T> {
+        return Builder {
+            let obj = self.build()
+            obj.setBackgroundImage(image, for: state)
+            return obj
+        }
+    }
+    
+    public func setTitle(_ title: String?, color: UIColor? = nil, for state: UIControlState = .normal) -> Builder<T> {
+        return Builder {
+            let obj = self.build()
+            obj.setTitle(title, for: state)
+            guard let color = color else { return obj }
+            obj.setTitleColor(color, for: state)
+            return obj
+        }
+    }
+	
+	public func style(_ style: T.ScrollMode) -> Builder<T> {
+		return Builder {
+			let obj = self.build()
+			obj.scrollMode = style
+			return obj
+		}
+	}
+    
+    public func bind(to scrollView: UIScrollView) -> Builder<T> {
+        return Builder {
+            let obj = self.build()
+            scrollView.addObserver(obj, forKeyPath: #keyPath(UIScrollView.contentOffset), options: [.new], context: nil)
+            return obj
+        }
+    }
+	
+	public func presentMode(_ mode: Toppon.PresentMode) -> Builder<T> {
+		return Builder {
+			let obj = self.build()
+			obj.presentMode = mode
+//			switch mode {
+//			case .pop:
+//				return obj
+//			case .custom(let animator, let before, let animation):
+//				obj.presentMode = .custom(animator: animator, onBegin: before, onNext: animation)
+//			default:
+//				return obj
+//			}
+			return obj
+		}
+	}
+}
+
 
 // MARK: - Helper
 
@@ -76,7 +135,7 @@ public extension Toppon {
         /// Toppon button will popup when func present(_ toppon: Toppon) being called.
         case pop
         
-        case custom
+		case custom(animator: UIViewPropertyAnimator, onBegin: (() -> Void)? = nil, onNext: (() -> Void)? = nil)
     }
 	
 	enum PresentDirection {
@@ -99,12 +158,27 @@ extension Toppon {
 	private func show(completed: (() -> Void)? = nil) {
 		TopponLog("\(#function)")
 		isPresented = true
-		
 		switch presentMode {
+		case .always:
+			completed?()
+		case .normal:
+			completed?()
 		case .pop:
-			popUpAnimation { completed?() }
-		default:
-			return
+			self.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
+			self.alpha = 1.0
+			let animator = UIViewPropertyAnimator(duration: 0.5, dampingRatio: 0.5)
+			animator.addAnimations {
+				self.transform = CGAffineTransform.identity.scaledBy(x: 1.0, y: 1.0)
+			}
+			animator.addCompletion { _ in completed?() }
+			animator.startAnimation()
+		case .custom(let animator, let before, let animation):
+			if let actionBeforeAnimate = before,
+				let animation = animation {
+				actionBeforeAnimate()
+				animator.addAnimations(animation)
+			}
+			animator.startAnimation()
 		}
     }
 	
@@ -141,19 +215,10 @@ extension Toppon {
 			}
 		}
 	}
-	
-	private func shouldShowButton(newOffset: CGPoint) -> Bool {
-		guard let scrollView = linkedScrollView else { return false }
-        switch self.scrollMode {
-        case .top:
-			return newOffset.y >= self.offset
-        case .bottom:
-			return newOffset.y + offset <= scrollView.maxContentOffset.y
-        }
-    }
 }
 
 extension Toppon {
+	
 	private func popUpAnimation(completed: (() -> Void)? = nil) {
 		self.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
         self.alpha = 1.0
