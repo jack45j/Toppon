@@ -12,8 +12,6 @@ public class Toppon: UIButton {
     /// Determines Toppon is presented or not.
 	private var isPresented: Bool = false
 	
-	typealias completionHandler = (() -> Void)?
-	
 	private var offset: CGFloat = 100
     
 	private var linkedScrollView: UIScrollView!
@@ -21,17 +19,15 @@ public class Toppon: UIButton {
 	public var presentMode: PresentMode = .always {
 		didSet {
 			switch presentMode {
-			case .normal:
-				return
+			case .always:
+				self.alpha = 1
 			default:
-				self.presentDirection = .none
+				self.alpha = 0
 			}
 		}
 	}
 	
     public var scrollMode: ScrollMode = .top
-	
-	public var presentDirection: PresentDirection = .none
 		
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -44,7 +40,6 @@ public class Toppon: UIButton {
 	}
 	
 	override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
-		
 		guard let newValue = change?[NSKeyValueChangeKey.newKey] as? CGPoint,
 			  let scrollView = object as? UIScrollView else { return }
 		linkedScrollView = scrollView
@@ -52,71 +47,19 @@ public class Toppon: UIButton {
 	}
 	
 	private func setupUI() {
-		
+		self.addTarget(self, action: #selector(buttonDidPressed), for: .touchUpInside)
 	}
 
 	deinit {
-	  self.removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset))
+		self.removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset))
+		self.removeTarget(nil, action: nil, for: .allEvents)
 	}
-}
-
-extension Builder where T: Toppon {
-    public func setBackground(color: UIColor) -> Builder<T> {
-        return Builder {
-            let obj = self.build()
-            obj.backgroundColor = color
-            return obj
-        }
-    }
-    
-    public func setBackground(image: UIImage, for state: UIControlState = .normal) -> Builder<T> {
-        return Builder {
-            let obj = self.build()
-            obj.setBackgroundImage(image, for: state)
-            return obj
-        }
-    }
-    
-    public func setTitle(_ title: String?, color: UIColor? = nil, for state: UIControlState = .normal) -> Builder<T> {
-        return Builder {
-            let obj = self.build()
-            obj.setTitle(title, for: state)
-            guard let color = color else { return obj }
-            obj.setTitleColor(color, for: state)
-            return obj
-        }
-    }
 	
-	public func style(_ style: T.ScrollMode) -> Builder<T> {
-		return Builder {
-			let obj = self.build()
-			obj.scrollMode = style
-			return obj
-		}
-	}
-    
-    public func bind(to scrollView: UIScrollView) -> Builder<T> {
-        return Builder {
-            let obj = self.build()
-            scrollView.addObserver(obj, forKeyPath: #keyPath(UIScrollView.contentOffset), options: [.new], context: nil)
-            return obj
-        }
-    }
-	
-	public func presentMode(_ mode: Toppon.PresentMode) -> Builder<T> {
-		return Builder {
-			let obj = self.build()
-			obj.presentMode = mode
-//			switch mode {
-//			case .pop:
-//				return obj
-//			case .custom(let animator, let before, let animation):
-//				obj.presentMode = .custom(animator: animator, onBegin: before, onNext: animation)
-//			default:
-//				return obj
-//			}
-			return obj
-		}
+	@objc private func buttonDidPressed() {
+		guard let linkedScrollView = linkedScrollView else { return }
+		linkedScrollView.setContentOffset(scrollMode == .top ? .zero : linkedScrollView.maxContentOffset,
+										  animated: true)
+		
 	}
 }
 
@@ -125,17 +68,14 @@ extension Builder where T: Toppon {
 
 public extension Toppon {
     enum PresentMode {
-        /// (DEFAULT) Toppon button will always show after ViewController launched.
         case always
-
-        /// Toppon button will move in from initPosition to destPosition with animation.
-        /// Call func present(_ toppon: Toppon) to present Toppon button.
-        case normal
-
-        /// Toppon button will popup when func present(_ toppon: Toppon) being called.
+		case normal(direction: PresentDirection)
         case pop
-        
-		case custom(animator: UIViewPropertyAnimator, onBegin: (() -> Void)? = nil, onNext: (() -> Void)? = nil)
+		case custom(
+			showAnimator: UIViewPropertyAnimator,
+			showBegin: (() -> Void)? = nil,
+			dismissAnimator: UIViewPropertyAnimator,
+			dismissBegin: (() -> Void)? = nil)
     }
 	
 	enum PresentDirection {
@@ -143,6 +83,7 @@ public extension Toppon {
 		case right
 		case bottom
 		case left
+		case auto
 		case none
 	}
     
@@ -163,6 +104,7 @@ extension Toppon {
 			completed?()
 		case .normal:
 			completed?()
+			
 		case .pop:
 			self.transform = CGAffineTransform(scaleX: 0.0, y: 0.0)
 			self.alpha = 1.0
@@ -172,13 +114,22 @@ extension Toppon {
 			}
 			animator.addCompletion { _ in completed?() }
 			animator.startAnimation()
-		case .custom(let animator, let before, let animation):
-			if let actionBeforeAnimate = before,
-				let animation = animation {
-				actionBeforeAnimate()
-				animator.addAnimations(animation)
+			
+		case .custom(let showAnimator,
+					 let showBegin,
+					 let dismissAnimator, _):
+			if showAnimator.isRunning {
+				showAnimator.stopAnimation(true)
+				showAnimator.finishAnimation(at: .start)
+			} else if dismissAnimator.isRunning {
+				dismissAnimator.stopAnimation(true)
+				dismissAnimator.finishAnimation(at: .start)
 			}
-			animator.startAnimation()
+			if let actionBeforeAnimate = showBegin {
+				actionBeforeAnimate()
+			}
+			
+			showAnimator.startAnimation()
 		}
     }
 	
@@ -189,6 +140,21 @@ extension Toppon {
 		switch presentMode {
 		case .pop:
 			popDownAnimation { completed?() }
+			
+		case .custom(let showAnimator, _,
+					 let dismissAnimator,
+					 let dismissBegin):
+			if showAnimator.isRunning {
+				showAnimator.stopAnimation(true)
+				showAnimator.finishAnimation(at: .start)
+			} else if dismissAnimator.isRunning {
+				dismissAnimator.stopAnimation(true)
+				dismissAnimator.finishAnimation(at: .start)
+			}
+			if let actionBeforeAnimate = dismissBegin {
+				actionBeforeAnimate()
+			}
+			dismissAnimator.startAnimation()
 		default:
 			return
 		}
