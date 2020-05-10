@@ -63,10 +63,13 @@ extension Builder where T: Toppon {
 		}
 	}
     
-    public func bind(to scrollView: UIScrollView) -> Builder<T> {
+	public func bind(to scrollView: UIScrollView) -> Builder<T> {
         return Builder {
             let obj = self.build()
-            scrollView.addObserver(obj, forKeyPath: #keyPath(UIScrollView.contentOffset), options: [.new], context: nil)
+			if !obj.isObserving {
+				scrollView.addObserver(obj, forKeyPath: #keyPath(UIScrollView.contentOffset), options: [.new], context: nil)
+				obj.isObserving = true
+			}
             return obj
         }
     }

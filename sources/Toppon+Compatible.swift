@@ -8,11 +8,11 @@
 
 import Foundation
 
-extension Toppon: TopponCompatible {}
 public protocol TopponCompatible {}
+extension Toppon: TopponCompatible {}
 
 extension TopponCompatible where Self: Toppon {
-    public var bs: Builder<Self> {
+    public var manager: Builder<Self> {
         get { Builder(self) }
     }
 }

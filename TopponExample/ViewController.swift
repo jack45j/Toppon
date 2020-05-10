@@ -16,29 +16,10 @@ class ViewController: UIViewController, TopponDelegate, UITextViewDelegate, UISc
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		toppon.bs
-			.scrollMode(.top)
+		toppon.manager
 			.bind(to: scrollview1)
-			.presentMode(.custom(
-				showAnimator: UIViewPropertyAnimator(
-					duration: 5,
-					dampingRatio: 0.5,
-					animations: { [weak toppon] in
-						toppon?.transform = CGAffineTransform(scaleX: 1, y: 1)
-						toppon?.alpha = 1
-				}),
-				showBegin: { [weak toppon] in
-					toppon?.transform = CGAffineTransform(scaleX: 0, y: 0)
-			},
-				dismissAnimator: UIViewPropertyAnimator(duration: 5,
-														dampingRatio: 0.5,
-														animations: { [weak toppon] in
-					toppon?.transform = CGAffineTransform(scaleX: 0, y: 0)
-					toppon?.alpha = 0
-				}),
-				dismissBegin: { [weak toppon] in
-					toppon?.transform = CGAffineTransform(scaleX: 1.0, y: 1.0)
-			}))
+			.scrollMode(.top)
+			.presentMode(.pop)
 			.build()
 		
 		
@@ -46,5 +27,12 @@ class ViewController: UIViewController, TopponDelegate, UITextViewDelegate, UISc
         scrollview1.delegate = self
         scrollview2.delegate = self
     }
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+//		toppon.show {
+//			print("Show Completed")
+//		}
+	}
 }
 
