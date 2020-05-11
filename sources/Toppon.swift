@@ -109,7 +109,7 @@ extension Toppon {
 		
 		switch presentMode {
 		case .pop:
-			let anm = animation.fillAnimation(1, amplitude: 0.35, reverse: false)
+			let anm = animation.fillAnimation(1, amplitude: 0.5, reverse: false)
 			let opacityAnimation = animation.opacityAnimation(false)
 			self.layer.opacity = 1.0
 			CATransaction.begin()
@@ -118,14 +118,13 @@ extension Toppon {
 				self.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
 				self.layer.opacity = 1.0
 			}
+//			self.layer.add(tran, forKey: "trans")
 			self.layer.add(anm, forKey: "transform")
 			self.layer.add(opacityAnimation, forKey: "opacity")
 			
 			CATransaction.commit()
 		default: ()
 		}
-		
-		
     }
 	
     private func dismissTP(completed: (() -> Void)? = nil) {
@@ -134,21 +133,36 @@ extension Toppon {
 		
 		switch presentMode {
 		case .pop:
-			let anm = animation.fillAnimation(1, amplitude: 0.18, reverse: true)
-			//		let opacityAnimation = animation.opacityAnimation(true)
-					CATransaction.begin()
-					CATransaction.setCompletionBlock {
-						self.layer.removeAllAnimations()
-						self.layer.transform = CATransform3DMakeScale(0.0, 0.0, 0.0)
-						self.layer.opacity = 0.0
-					}
-					self.layer.add(anm, forKey: "transform")
-			//		self.layer.add(opacityAnimation, forKey: "opacity")
-					
-					CATransaction.commit()
+			let anm = animation.fillAnimation(1, amplitude: 0.35, reverse: true)
+			let opacityAnimation = animation.opacityAnimation(true)
+			excuteAnimations(animations:
+				(animation: anm, keyPath: "transform"),
+				(animation: opacityAnimation, keyPath: "opacity")
+			) {
+				self.layer.removeAllAnimations()
+				self.layer.transform = CATransform3DMakeScale(0.0, 0.0, 0.0)
+				self.layer.opacity = 0.0
+			}
+//			CATransaction.begin()
+//			CATransaction.setCompletionBlock {
+//
+//			}
+//			self.layer.add(anm, forKey: "transform")
+//			self.layer.add(opacityAnimation, forKey: "opacity")
+//
+//			CATransaction.commit()
 		default: ()
 		}
     }
+	
+	func excuteAnimations(animations: (animation: CAAnimation, keyPath: String)..., completion: (() -> Void)?) {
+		CATransaction.begin()
+		CATransaction.setCompletionBlock(completion)
+		for animation in animations {
+			self.layer.add(animation.animation, forKey: animation.keyPath)
+		}
+		CATransaction.commit()
+	}
 	
 	private func scrollViewOffsetDidChange(to newOffset: CGPoint) {
 		TopponLog("\(#function)。\(newOffset)")
