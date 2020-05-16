@@ -25,7 +25,6 @@ class ViewController: UIViewController, UITextViewDelegate, UIScrollViewDelegate
 		.bind(to: scrollview1, distance: 100)
 		.scrollMode(.bottom)
 		.presentMode(.pop)
-		.debug(true)
 		.setActions(
 			didPressed: {
 			print("DidPressed")

@@ -11,21 +11,20 @@ import UIKit
 public typealias ActionHandler = (() -> Void)?
 public class Toppon: UIButton {
 	
+	/// Determine TopponLog will display or not.
 	public var debug: Bool = false
 	
-	public var didShowAction: ActionHandler = nil
-	public var didDismissAction: ActionHandler = nil
-	public var didPressedAction: ActionHandler = nil
+	// MARK: - Toppon Actions Handler
+	public var didShowAction: ActionHandler = nil		// Toppon showed after animated
+	public var didDismissAction: ActionHandler = nil	// Toppon dismissed after animated
+	public var didPressedAction: ActionHandler = nil	// User did pressed Toppon
 	
-    /// Determines Toppon is presented or not.
-	private var isPresented: Bool = false
-	
-	/// The scroll offset to show or hide button.
+	/// Offset value which will be calculated with linkedScrollView's contentOffset and used to determine Toppon should be shown or dismissed
+	/// Defaults to 50
 	public var triggeredDistance: CGFloat = 50
-    
-	public var linkedScrollView: UIScrollView!
 	
-	private var currentOffset: CGPoint = .zero
+	/// The scrollView which Toppon bind with
+	public var linkedScrollView: UIScrollView!
 	
 	public var presentMode: PresentMode? {
 		didSet {
@@ -38,9 +37,11 @@ public class Toppon: UIButton {
 	
     public var scrollMode: ScrollMode = .top
 	
-	private var animation: TopponAnimationGenerator = TopponAnimationGenerator()
+	private var currentOffset: CGPoint = .zero
 	
-	public var isObserving = false
+	private var isPresented: Bool = false
+	
+	private var animation: TopponAnimationGenerator = TopponAnimationGenerator()
 	
 	override init(frame: CGRect) {
 		super.init(frame: frame)
@@ -141,9 +142,7 @@ extension Toppon {
 	
 	private func showTP(completed: (() -> Void)? = nil) {
 		TopponLog("\(#function)")
-		didShowAction?()
 		isPresented = true
-		
 		switch presentMode {
 		case .pop:
 			self.layer.opacity = 1.0
@@ -153,11 +152,11 @@ extension Toppon {
 			) { self.resetStatus(isReverse: false) }
 		default: ()
 		}
+		didShowAction?()
     }
 	
     private func dismissTP(completed: (() -> Void)? = nil) {
         TopponLog("\(#function)")
-		didDismissAction?()
 		isPresented = false
 		
 		switch presentMode {
@@ -168,6 +167,7 @@ extension Toppon {
 			) { self.resetStatus(isReverse: true) }
 		default: ()
 		}
+		didDismissAction?()
     }
 	
 	func excuteAnimations(animations: Animations..., completion: (() -> Void)?) {

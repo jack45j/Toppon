@@ -88,10 +88,8 @@ extension Builder where T: Toppon {
         return Builder {
             let obj = self.build()
 			obj.triggeredDistance = distance
-			if !obj.isObserving {
-				scrollView.addObserver(obj, forKeyPath: #keyPath(UIScrollView.contentOffset), options: [.new], context: nil)
-				obj.isObserving = true
-			}
+			guard obj.linkedScrollView != scrollView else { return obj }
+			scrollView.addObserver(obj, forKeyPath: #keyPath(UIScrollView.contentOffset), options: [.new], context: nil)
             return obj
         }
     }
