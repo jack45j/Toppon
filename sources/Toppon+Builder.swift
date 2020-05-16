@@ -12,8 +12,8 @@ public struct Builder<T: Toppon> {
     private let _build: () -> T
 
     @discardableResult
-    public func build() -> T {
-        _build()
+	public func build() -> T {
+		_build()
     }
 
     public init(_ build: @escaping () -> T) {
@@ -27,6 +27,27 @@ public struct Builder<T: Toppon> {
 
 
 extension Builder where T: Toppon {
+	
+	public func setActions(didPressed: @escaping (() -> Void),
+						   didShow: @escaping (() -> Void),
+						   didDismiss: @escaping (() -> Void)) -> Builder<T> {
+		return Builder {
+			let obj = self.build()
+			obj.didPressedAction = didPressed
+			obj.didShowAction = didShow
+			obj.didDismissAction = didDismiss
+			return obj
+		}
+	}
+	
+	public func debug(_ enable: Bool = true) -> Builder<T> {
+		return Builder {
+			let obj = self.build()
+			obj.debug = enable
+			return obj
+		}
+	}
+	
     public func setBackground(color: UIColor) -> Builder<T> {
         return Builder {
             let obj = self.build()
@@ -63,9 +84,10 @@ extension Builder where T: Toppon {
 		}
 	}
     
-	public func bind(to scrollView: UIScrollView) -> Builder<T> {
+	public func bind(to scrollView: UIScrollView, distance: CGFloat = 50) -> Builder<T> {
         return Builder {
             let obj = self.build()
+			obj.triggeredDistance = distance
 			if !obj.isObserving {
 				scrollView.addObserver(obj, forKeyPath: #keyPath(UIScrollView.contentOffset), options: [.new], context: nil)
 				obj.isObserving = true

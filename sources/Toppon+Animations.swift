@@ -8,11 +8,13 @@
 
 import UIKit
 
-internal class TopponAnimationGenerator {
+public class TopponAnimationGenerator {
 	
     // MARK: - Properties
     //
     
+	public init() {}
+	
     var animationDuration: TimeInterval = 0.25
     
     fileprivate var frameRate: CGFloat = 60.0
@@ -45,20 +47,20 @@ internal class TopponAnimationGenerator {
         return animation("opacity", reverse: reverse)
     }
 	
-	final func transAnimation(_ numberOfBounces: Int = 1, amplitude: CGFloat = 0.5, reverse: Bool) -> CAKeyframeAnimation {
-        var values = [CATransform3D]()
-        var keyTimes = [Float]()
-        
-        // Create the animation.
-        let animation = CAKeyframeAnimation(keyPath: "trans")
-		animation.values = values.map({ NSValue(caTransform3D: $0) })
-		animation.keyTimes = keyTimes.map({ NSNumber(value: $0 as Float) })
-        animation.isRemovedOnCompletion = false
-        animation.fillMode = kCAFillModeForwards
-        animation.duration = animationDuration
-		animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-		return animation
-    }
+//	final func transAnimation(_ numberOfBounces: Int = 1, amplitude: CGFloat = 0.5, reverse: Bool) -> CAKeyframeAnimation {
+//        var values = [CATransform3D]()
+//        var keyTimes = [Float]()
+//
+//        // Create the animation.
+//        let animation = CAKeyframeAnimation(keyPath: "trans")
+//		animation.values = values.map({ NSValue(caTransform3D: $0) })
+//		animation.keyTimes = keyTimes.map({ NSNumber(value: $0 as Float) })
+//        animation.isRemovedOnCompletion = false
+//        animation.fillMode = kCAFillModeForwards
+//        animation.duration = animationDuration
+//		animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+//		return animation
+//    }
 	
 	/**
      Creates an animation that animates between a filled an unfilled box.

@@ -230,7 +230,7 @@ Is Only For You Just Wanna Be For You
                                     <constraint firstAttribute="width" secondItem="Xnp-TR-V2y" secondAttribute="height" multiplier="1:1" id="5rD-lt-UGT"/>
                                     <constraint firstAttribute="width" constant="30" id="9sJ-rQ-FjY"/>
                                 </constraints>
-                                <state key="normal" image="ScrollToBottom"/>
+                                <state key="normal" image="ScrollToTop"/>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -257,6 +257,6 @@ Is Only For You Just Wanna Be For You
         </scene>
     </scenes>
     <resources>
-        <image name="ScrollToBottom" width="48" height="48"/>
+        <image name="ScrollToTop" width="48" height="48"/>
     </resources>
 </document>

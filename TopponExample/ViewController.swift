@@ -7,7 +7,7 @@
 
 import UIKit
 
-class ViewController: UIViewController, TopponDelegate, UITextViewDelegate, UIScrollViewDelegate {
+class ViewController: UIViewController, UITextViewDelegate, UIScrollViewDelegate {
 	@IBOutlet weak var toppon: Toppon!
 	@IBOutlet weak var scrollview: UITextView!
     @IBOutlet weak var scrollview1: UITextView!
@@ -16,23 +16,27 @@ class ViewController: UIViewController, TopponDelegate, UITextViewDelegate, UISc
     override func viewDidLoad() {
         super.viewDidLoad()
 		
-		toppon.manager
-			.bind(to: scrollview1)
-			.scrollMode(.top)
-			.presentMode(.pop)
-			.build()
 		
-		
-        scrollview.delegate = self
-        scrollview1.delegate = self
-        scrollview2.delegate = self
     }
 	
 	override func viewDidAppear(_ animated: Bool) {
 		super.viewDidAppear(animated)
-//		toppon.show {
-//			print("Show Completed")
-//		}
+		toppon.manager
+		.bind(to: scrollview1, distance: 100)
+		.scrollMode(.bottom)
+		.presentMode(.pop)
+		.debug(true)
+		.setActions(
+			didPressed: {
+			print("DidPressed")
+		},
+			didShow: {
+			print("didShow")
+		},
+			didDismiss: {
+			print("didDismiss")
+		})
+		.build()
 	}
 }
 

@@ -8,15 +8,24 @@
 import Foundation
 import UIKit
 
+public typealias ActionHandler = (() -> Void)?
 public class Toppon: UIButton {
+	
+	public var debug: Bool = false
+	
+	public var didShowAction: ActionHandler = nil
+	public var didDismissAction: ActionHandler = nil
+	public var didPressedAction: ActionHandler = nil
+	
     /// Determines Toppon is presented or not.
 	private var isPresented: Bool = false
 	
-	private var triggeredDistance: CGFloat = 50
+	/// The scroll offset to show or hide button.
+	public var triggeredDistance: CGFloat = 50
     
 	public var linkedScrollView: UIScrollView!
 	
-	private var currentOffset: CGPoint = .zero	
+	private var currentOffset: CGPoint = .zero
 	
 	public var presentMode: PresentMode? {
 		didSet {
@@ -43,6 +52,27 @@ public class Toppon: UIButton {
 		setupUI()
 	}
 	
+	private func setupUI() {
+		self.addTarget(self, action: #selector(buttonDidPressed), for: .touchUpInside)
+	}
+	
+	@objc private func buttonDidPressed() {
+		didPressedAction?()
+		guard let linkedScrollView = linkedScrollView else { return }
+		linkedScrollView.setContentOffset(scrollMode == .top ? .zero : linkedScrollView.maxContentOffset,
+										  animated: true)
+	}
+	
+	public override func willMove(toWindow newWindow: UIWindow?) {
+		super.willMove(toWindow: newWindow)
+		self.scrollViewOffsetDidChange(to: .zero)
+	}
+
+	deinit {
+		self.removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset))
+		self.removeTarget(nil, action: nil, for: .allEvents)
+	}
+	
 	override public func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
 		guard
 			keyPath == #keyPath(UIScrollView.contentOffset),
@@ -55,21 +85,6 @@ public class Toppon: UIButton {
 		scrollViewOffsetDidChange(to: newValue)
 	}
 	
-	private func setupUI() {
-		self.addTarget(self, action: #selector(buttonDidPressed), for: .touchUpInside)
-	}
-
-	deinit {
-		self.removeObserver(self, forKeyPath: #keyPath(UIScrollView.contentOffset))
-		self.removeTarget(nil, action: nil, for: .allEvents)
-	}
-	
-	@objc private func buttonDidPressed() {
-		guard let linkedScrollView = linkedScrollView else { return }
-		linkedScrollView.setContentOffset(scrollMode == .top ? .zero : linkedScrollView.maxContentOffset,
-										  animated: true)
-	}
-	
 	public func show(with completionHandler: (() -> Void)? = nil) {
 		self.showTP(completed: completionHandler)
 	}
@@ -79,9 +94,9 @@ public class Toppon: UIButton {
 // MARK: - Helper
 
 public extension Toppon {
-    enum PresentMode {
+	enum PresentMode {
         case always
-		case normal(direction: PresentDirection)
+		case normal(direction: PresentDirection = .auto)
         case pop
     }
 	
@@ -98,6 +113,27 @@ public extension Toppon {
         case top
         case bottom
     }
+	
+	enum Animations {
+		case transform(TopponAnimationGenerator, isReverse: Bool)
+		case opacity(TopponAnimationGenerator, isReverse: Bool)
+		
+		var keyPath:String {
+			switch self {
+			case .transform(_): return "transform"
+			case .opacity(_):	return "opacity"
+			}
+		}
+		
+		func animate() -> CAAnimation {
+			switch self {
+			case .transform(let animation, let isReverse):
+				return animation.fillAnimation(1, amplitude: 0.5, reverse: isReverse)
+			case .opacity(let animation, let isReverse):
+				return animation.opacityAnimation(isReverse)
+			}
+		}
+	}
 }
 
 // MARK: - private helper
@@ -105,63 +141,53 @@ extension Toppon {
 	
 	private func showTP(completed: (() -> Void)? = nil) {
 		TopponLog("\(#function)")
+		didShowAction?()
 		isPresented = true
 		
 		switch presentMode {
 		case .pop:
-			let anm = animation.fillAnimation(1, amplitude: 0.5, reverse: false)
-			let opacityAnimation = animation.opacityAnimation(false)
 			self.layer.opacity = 1.0
-			CATransaction.begin()
-			CATransaction.setCompletionBlock {
-				self.layer.removeAllAnimations()
-				self.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
-				self.layer.opacity = 1.0
-			}
-//			self.layer.add(tran, forKey: "trans")
-			self.layer.add(anm, forKey: "transform")
-			self.layer.add(opacityAnimation, forKey: "opacity")
-			
-			CATransaction.commit()
+			excuteAnimations(animations:
+								.transform(animation, isReverse: false),
+								.opacity(animation, isReverse: false)
+			) { self.resetStatus(isReverse: false) }
 		default: ()
 		}
     }
 	
     private func dismissTP(completed: (() -> Void)? = nil) {
         TopponLog("\(#function)")
+		didDismissAction?()
 		isPresented = false
 		
 		switch presentMode {
 		case .pop:
-			let anm = animation.fillAnimation(1, amplitude: 0.35, reverse: true)
-			let opacityAnimation = animation.opacityAnimation(true)
 			excuteAnimations(animations:
-				(animation: anm, keyPath: "transform"),
-				(animation: opacityAnimation, keyPath: "opacity")
-			) {
-				self.layer.removeAllAnimations()
-				self.layer.transform = CATransform3DMakeScale(0.0, 0.0, 0.0)
-				self.layer.opacity = 0.0
-			}
-//			CATransaction.begin()
-//			CATransaction.setCompletionBlock {
-//
-//			}
-//			self.layer.add(anm, forKey: "transform")
-//			self.layer.add(opacityAnimation, forKey: "opacity")
-//
-//			CATransaction.commit()
+								.transform(animation, isReverse: true),
+								.opacity(animation, isReverse: true)
+			) { self.resetStatus(isReverse: true) }
 		default: ()
 		}
     }
 	
-	func excuteAnimations(animations: (animation: CAAnimation, keyPath: String)..., completion: (() -> Void)?) {
+	func excuteAnimations(animations: Animations..., completion: (() -> Void)?) {
 		CATransaction.begin()
 		CATransaction.setCompletionBlock(completion)
 		for animation in animations {
-			self.layer.add(animation.animation, forKey: animation.keyPath)
+			self.layer.add(animation.animate(), forKey: animation.keyPath)
 		}
 		CATransaction.commit()
+	}
+	
+	func resetStatus(isReverse: Bool) {
+		self.layer.removeAllAnimations()
+		if isReverse {
+			self.layer.transform = CATransform3DMakeScale(0.0, 0.0, 0.0)
+			self.layer.opacity = 0.0
+		} else {
+			self.layer.transform = CATransform3DMakeScale(1.0, 1.0, 1.0)
+			self.layer.opacity = 1.0
+		}
 	}
 	
 	private func scrollViewOffsetDidChange(to newOffset: CGPoint) {
