@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
-    <device id="retina4_7" orientation="portrait">
-        <adaptation id="fullscreen"/>
-    </device>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15705" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13527"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15706"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -25,7 +22,7 @@
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="1Yp-l5-BBF">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="199.5"/>
                                         <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
-                                        <mutableString key="text">Taylor Swift 
+                                        <string key="text">Taylor Swift 
 
 Look What You Made Me Do
 
@@ -97,14 +94,14 @@ Look what you just made me
 Ooh, look what you made me do
 Look what you made me do
 Look what you just made me do
-Look what you just made me do</mutableString>
+Look what you just made me do</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Huh-kg-D13">
                                         <rect key="frame" x="0.0" y="215.5" width="375" height="200"/>
                                         <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
-                                        <mutableString key="text">Apink 
+                                        <string key="text">Apink 
 
 All For You
 
@@ -156,14 +153,14 @@ Is Only For You Just Wanna Be For You
 
 Is Only For You Just Wanna Be For You
 넌 그렇게 지금 모습 그대로 내 곁에 있으면 돼
-난 다시 태어나도 영원히 너만 바라볼게</mutableString>
+난 다시 태어나도 영원히 너만 바라볼게</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                     <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="center" selectable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="IS3-Sk-YSi">
                                         <rect key="frame" x="0.0" y="431.5" width="375" height="199.5"/>
                                         <color key="backgroundColor" red="0.90196079019999997" green="0.90196079019999997" blue="0.90196079019999997" alpha="1" colorSpace="calibratedRGB"/>
-                                        <mutableString key="text">李宗盛  因為單身的緣故  因為單身的緣故
+                                        <string key="text">李宗盛  因為單身的緣故  因為單身的緣故
 日子過得比較素
 剛開始有點難度
 現在比較知道怎麼對付
@@ -221,18 +218,28 @@ Is Only For You Just Wanna Be For You
 我把僅存慾望去骨
 我像巫師得 專心練法術
 我是巫師 我練我的法術
-日子過得比較素</mutableString>
+日子過得比較素</string>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                     </textView>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Xnp-TR-V2y" customClass="Toppon" customModule="Toppon" customModuleProvider="target">
+                                <rect key="frame" x="329" y="389.5" width="30" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="Xnp-TR-V2y" secondAttribute="height" multiplier="1:1" id="5rD-lt-UGT"/>
+                                    <constraint firstAttribute="width" constant="30" id="9sJ-rQ-FjY"/>
+                                </constraints>
+                                <state key="normal" image="ScrollToTop"/>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="bottom" secondItem="eyU-Iv-bKg" secondAttribute="bottom" constant="16" id="ABO-SP-8fr"/>
+                            <constraint firstItem="Xnp-TR-V2y" firstAttribute="bottom" secondItem="Huh-kg-D13" secondAttribute="bottom" constant="-16" id="NUU-Vo-46A"/>
                             <constraint firstItem="eyU-Iv-bKg" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="20" id="QMY-2i-TgY"/>
                             <constraint firstItem="eyU-Iv-bKg" firstAttribute="leadingMargin" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="WCP-XZ-AHN"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="Xnp-TR-V2y" secondAttribute="trailing" constant="16" id="sW3-iO-Y21"/>
                             <constraint firstAttribute="trailing" secondItem="eyU-Iv-bKg" secondAttribute="trailing" id="tes-jj-Yr2"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
@@ -241,6 +248,7 @@ Is Only For You Just Wanna Be For You
                         <outlet property="scrollview" destination="1Yp-l5-BBF" id="7j9-pt-RsR"/>
                         <outlet property="scrollview1" destination="Huh-kg-D13" id="Xax-2c-XR5"/>
                         <outlet property="scrollview2" destination="IS3-Sk-YSi" id="Lsv-lq-8gz"/>
+                        <outlet property="toppon" destination="Xnp-TR-V2y" id="7Id-iL-Ngo"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -248,4 +256,7 @@ Is Only For You Just Wanna Be For You
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="ScrollToTop" width="48" height="48"/>
+    </resources>
 </document>

@@ -7,9 +7,8 @@
 
 import Foundation
 
-struct TopponLog {
-    @discardableResult
-    init(_ message: String) {
-        print("[Toppon] \(message)")
-    }
+extension Toppon {
+	func TopponLog(_ message: String) {
+		if debug { print("[Toppon] \(message)") }
+	}
 }
