@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "Toppon"
-  s.version      = "0.0.4"
+  s.version      = "0.1.0"
   s.summary      = "A lightweight Scroll-To button for iOS UIScrollView"
   s.swift_version = "4.2"
   # This description is used to generate tags and improve search results.
@@ -24,10 +24,9 @@ Pod::Spec.new do |s|
   #   * Try to keep it short, snappy and to the point.
   #   * Write the description between the DESC delimiters below.
   #   * Finally, don't worry about the indent, CocoaPods strips it!
-  s.description  = <<-DESC
+  s.description  = <<-DESC 
 A lightweight Scroll-To button for iOS UIScrollView, UITableView, UITextView. Toppon is a subclass of UIButton. Toppon not only a can be a Scroll-To button but a fully customizable UIButton.
-                   DESC
-
+DESC
   s.homepage     = "https://github.com/jack45j/Toppon"
   # s.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
