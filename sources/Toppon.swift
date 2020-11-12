@@ -20,8 +20,8 @@ public class Toppon: UIButton {
 	public var didPressedAction: ActionHandler = nil	// User did pressed Toppon
 	
 	/// Offset value which will be calculated with linkedScrollView's contentOffset and used to determine Toppon should be shown or dismissed
-	/// Defaults to 50
-	public var triggeredDistance: CGFloat = 50
+	/// Defaults to 50 assigned in builder
+	public var triggeredDistance: CGFloat = .zero
 	
 	/// The scrollView which Toppon bind with
 	public var linkedScrollView: UIScrollView!
@@ -37,7 +37,7 @@ public class Toppon: UIButton {
 	
     public var scrollMode: ScrollMode = .top
 	
-	private var currentOffset: CGPoint = .zero
+	private var currentOffset: CGPoint? = nil
 	
 	private var isPresented: Bool = false
 	
@@ -60,7 +60,7 @@ public class Toppon: UIButton {
 	@objc private func buttonDidPressed() {
 		didPressedAction?()
 		guard let linkedScrollView = linkedScrollView else { return }
-		linkedScrollView.setContentOffset(scrollMode == .top ? .zero : linkedScrollView.maxContentOffset,
+		linkedScrollView.setContentOffset(scrollMode == .top ? .zero : linkedScrollView.tpMaxContentOffset,
 										  animated: true)
 	}
 	
@@ -78,11 +78,9 @@ public class Toppon: UIButton {
 		guard
 			keyPath == #keyPath(UIScrollView.contentOffset),
 			let newValue = change?[NSKeyValueChangeKey.newKey] as? CGPoint,
-			let scrollView = object as? UIScrollView,
 			newValue != currentOffset
 		else { return }
 		currentOffset = newValue
-		linkedScrollView = scrollView
 		scrollViewOffsetDidChange(to: newValue)
 	}
 	
@@ -97,7 +95,7 @@ public class Toppon: UIButton {
 public extension Toppon {
 	enum PresentMode {
         case always
-		case normal(direction: PresentDirection = .auto)
+//		case normal(direction: PresentDirection = .auto)
         case pop
     }
 	
@@ -206,7 +204,7 @@ extension Toppon {
 					dismissTP()
 				}
 			case .bottom:
-				if newOffset.y + triggeredDistance <= scrollView.maxContentOffset.y {
+				if newOffset.y + triggeredDistance <= scrollView.tpMaxContentOffset.y {
 					guard !isPresented else { return }
 					showTP()
 				} else {

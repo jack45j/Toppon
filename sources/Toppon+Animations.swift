@@ -47,21 +47,6 @@ public class TopponAnimationGenerator {
         return animation("opacity", reverse: reverse)
     }
 	
-//	final func transAnimation(_ numberOfBounces: Int = 1, amplitude: CGFloat = 0.5, reverse: Bool) -> CAKeyframeAnimation {
-//        var values = [CATransform3D]()
-//        var keyTimes = [Float]()
-//
-//        // Create the animation.
-//        let animation = CAKeyframeAnimation(keyPath: "trans")
-//		animation.values = values.map({ NSValue(caTransform3D: $0) })
-//		animation.keyTimes = keyTimes.map({ NSNumber(value: $0 as Float) })
-//        animation.isRemovedOnCompletion = false
-//        animation.fillMode = kCAFillModeForwards
-//        animation.duration = animationDuration
-//		animation.timingFunction = CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
-//		return animation
-//    }
-	
 	/**
      Creates an animation that animates between a filled an unfilled box.
      - parameter numberOfBounces: The number of bounces in the animation.
@@ -80,17 +65,6 @@ public class TopponAnimationGenerator {
             values.append(CATransform3DMakeScale(1.0, 1.0, 1.0))
         }
         keyTimes.append(0.0)
-//
-//		values.append(contentsOf: [
-//			CATransform3DMakeTranslation(-350, 0, 0),
-//			CATransform3DMakeTranslation(50, 0, 0),
-//			CATransform3DMakeTranslation(0, 0, 0)
-//		])
-//		if !reverse {
-//			keyTimes.append(contentsOf: [0.0, 0.5, 1])
-//		} else {
-//			keyTimes.append(1.0)
-//		}
         
         // Add the bounces.
         if numberOfBounces > 0 {

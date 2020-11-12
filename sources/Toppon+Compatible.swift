@@ -12,7 +12,7 @@ public protocol TopponCompatible {}
 extension Toppon: TopponCompatible {}
 
 extension TopponCompatible where Self: Toppon {
-    public var manager: Builder<Self> {
+    public var builder: Builder<Self> {
         get { Builder(self) }
     }
 }

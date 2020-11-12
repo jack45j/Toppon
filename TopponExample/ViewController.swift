@@ -15,16 +15,11 @@ class ViewController: UIViewController, UITextViewDelegate, UIScrollViewDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-		
-		
-    }
-	
-	override func viewDidAppear(_ animated: Bool) {
-		super.viewDidAppear(animated)
-		toppon.manager
+		toppon.builder
 		.bind(to: scrollview1, distance: 100)
 		.scrollMode(.bottom)
 		.presentMode(.pop)
+		.setImage(UIImage(named: "ScrollToBottom")!)
 		.setActions(
 			didPressed: {
 			print("DidPressed")
@@ -36,6 +31,11 @@ class ViewController: UIViewController, UITextViewDelegate, UIScrollViewDelegate
 			print("didDismiss")
 		})
 		.build()
+    }
+	
+	override func viewDidAppear(_ animated: Bool) {
+		super.viewDidAppear(animated)
+		
 	}
 }
 

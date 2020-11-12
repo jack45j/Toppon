@@ -88,7 +88,11 @@ extension Builder where T: Toppon {
         return Builder {
             let obj = self.build()
 			obj.triggeredDistance = distance
-			guard obj.linkedScrollView != scrollView else { return obj }
+			obj.linkedScrollView = scrollView
+			guard obj.linkedScrollView == scrollView else {
+				obj.TopponLog("Misleading linked ScrollView.")
+				return obj
+			}
 			scrollView.addObserver(obj, forKeyPath: #keyPath(UIScrollView.contentOffset), options: [.new], context: nil)
             return obj
         }
@@ -98,6 +102,14 @@ extension Builder where T: Toppon {
 		return Builder {
 			let obj = self.build()
 			obj.presentMode = mode
+			return obj
+		}
+	}
+	
+	public func setImage(_ image: UIImage?, for state: UIControlState = .normal) -> Builder<T> {
+		return Builder {
+			let obj = self.build()
+			obj.setImage(image, for: state)
 			return obj
 		}
 	}
