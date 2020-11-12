@@ -18,7 +18,7 @@ A lightweight **Scroll-To** button for iOS UIScrollView, UITabelView, UITextView
 ---
 
 ##### CocoaPods
-For `Swift 4.2`
+For `Swift 4.2` or greater
 ```ruby
 pod 'Toppon'
 ```
@@ -32,51 +32,30 @@ Simply copy files in sources folder into your project.
 #### How to use
 ---
 
-Initial a Toppon button.
+Toppon used a builder to initialize itself and using flat style API to configure
+You can create a Toppon button like this.
 
-```swift
-init(initPosition: CGPoint?, size: Int, normalIcon: String?)
-```
-Use properties to configure Toppoon
-
-```swift
-var destPosition: CGPoint? = CGPoint(x:0, y:0)
-var presentMode: PresentMode = .always
-var scollMode: ScrollMode = .top
-```
-
-Link Toppon to a UIScrollView or its subclass like UITableView and UITextView.
-```swift
-public func linkedTo(UIScrollView: UIScrollView)
+```Swift
+let toppon = Toppon() // or @IBOutlet weak var toppon: Toppon! 
+toppon.builder
+	.bind(to: scrollview, distance: 100) // Always need to bind Toppon with a UIScrollView.
+	.scrollMode(.top)
+	.presentMode(.pop)
+	.setImage(UIImage(named: "ScrollToBottom")!)
+	.build() // Must call this method to apply configuration to Toppon.
 ```
 
-##### Delegate methods
-
-```swift
-optional func TopponInitiated()
-optional func TopponDidPressed()
-optional func TopponWillPresent()
-optional func TopponWillDismiss()
+#### Configuration methods
+```Swift
+func bind(to scrollView: UIScrollView, distance: CGFloat = 50)
+func debug(_ enable: Bool = true)
+func scrollMode(_ mode: T.ScrollMode)
+func presentMode(_ mode: Toppon.PresentMode)
+func setBackground(image: UIImage?, for state: UIControl.State = .normal)
+func setImage(_ image: UIImage?, for state: UIControl.State = .normal)
+func setActions(didPressed: @escaping (() -> Void), didShow: @escaping (() -> Void), didDismiss: @escaping (() -> Void))
 ```
-
-
-
-##### Present and Dismiss
-Call present and dismiss methods when you need it.
-```swift
-public func present()
-public func dismiss()
-```
-###### For Example
-You can present and dismiss Toppon button in your ScrollViewDelegate.
-
-```swift
-if scrollview.contentOffset.y >= 30 {
-  toppon.present()
-} else {
-  toppon.dismiss()
-}
-```
+---
 
 ## License
 Toppon is released under the MIT license.
@@ -92,7 +71,7 @@ Feel free to contact me.
 
 
 ## What features are going to release.
-1) Support storyboard
+1) More animation styles.
 2) Optimize methods and animations
 3) Add a Label above/under Toppon button
 
