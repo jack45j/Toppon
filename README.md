@@ -10,7 +10,6 @@ A lightweight **Scroll-To** button for iOS UIScrollView, UITabelView, UITextView
 * Multiple display modes.
 * Set whatever positions you want.
 * Customizable button icon.
-* Multiple delegate methods.
 
 
 
