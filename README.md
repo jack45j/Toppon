@@ -31,7 +31,7 @@ Simply copy files in sources folder into your project.
 #### How to use
 ---
 
-Toppon used a builder to initialize itself and using flat style API to configure
+Toppon used a builder to initialize itself and using Fluent Interface API to configure
 You can create a Toppon button like this.
 
 ```Swift
